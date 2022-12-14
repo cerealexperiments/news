@@ -1,0 +1,5 @@
+yesterday:
+  - add boilerplate code
+  - add basic layout for simple components
+today:
+  - implement layout for components on the main page
