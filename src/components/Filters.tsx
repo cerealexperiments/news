@@ -2,7 +2,7 @@ import React from 'react';
 
 const Filters = () => {
   return (
-    <div className="max-w-screen-xl mx-auto pt-8">
+    <div className="">
       <p className="font-medium text-lg">Фильтрация</p>
       <ul className="flex flex-col gap-2 pt-4 pb-4">
         <li className="flex gap-4">
@@ -26,7 +26,7 @@ const Filters = () => {
           Мода
         </li>
       </ul>
-      <button className="bg-purple-500 py-1 px-4 rounded-lg text-white font-medium">Применить</button>
+      <button className="bg-purple-700 py-1.5 px-8 rounded-xl text-white font-medium">Применить</button>
     </div>
   );
 };
