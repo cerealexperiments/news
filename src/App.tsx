@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import Filters from "./components/Filters";
 import PostsList from "./components/PostsList";
+import Footer from "./components/Footer";
 
 const posts = [
   {
@@ -25,11 +26,13 @@ const posts = [
 
 function App() {
   return (
-    <div className="">
+    <div className="flex min-h-screen flex-col">
       <Header />
       <div className="max-w-screen-xl mx-auto pt-8 flex justify-between gap-36">
         <Filters/>
-        <PostsList posts={posts}/></div>
+        <PostsList posts={posts}/>
+      </div>
+      <Footer />
     </div>
   )
 }
