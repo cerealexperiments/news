@@ -1,0 +1,6 @@
+yesterday:
+  - add Post component layout
+  - improve Header styling
+today:
+  - add Footer component
+  - add Authentication and Registration pages layout
