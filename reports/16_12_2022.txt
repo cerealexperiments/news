@@ -1,0 +1,5 @@
+yesterday:
+  - add Footer component
+  - add Registration and Authentication components layout
+today:
+  - add Post page layout
