@@ -1,6 +1,7 @@
 import React from 'react';
 import { IoShareSocialOutline, IoHeartOutline } from "react-icons/io5";
 import { Post } from "../types";
+import { Link } from "react-router-dom";
 
 
 const PostItem: React.FC<Post> = ({title, text, image, datePosted}) => {
@@ -11,7 +12,7 @@ const PostItem: React.FC<Post> = ({title, text, image, datePosted}) => {
         <p className="text-slate-500">{datePosted}</p>
         <p className="font-medium text-lg pt-1 text-2xl">{title}</p>
         <p className="text-slate-500 pt-1">{text}</p>
-        <p className="underline text-purple-700 pt-1 pb-4">Читать дальше...</p>
+        <Link to={"/post"}><p className="underline text-purple-700 pt-1 pb-4">Читать дальше...</p></Link>
         <IoShareSocialOutline size="24px" color="#64748b"/>
         <IoHeartOutline className="absolute top-0 right-0" size="24px"/>
       </div>

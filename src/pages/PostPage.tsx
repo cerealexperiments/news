@@ -1,12 +1,13 @@
 import React from 'react';
 import { IoArrowBackSharp, IoShareSocialOutline } from "react-icons/io5";
 import { Post } from "../types";
+import { Link } from "react-router-dom";
 
 const PostPage: React.FC<Post> = ({title, text, image, datePosted, comments}) => {
   return (
     <div className="max-w-screen-xl mx-auto pt-8 w-full">
       <div className="max-w-[845px]">
-        <IoArrowBackSharp size="30"/>
+        <Link to={"/"}><IoArrowBackSharp size="30"/></Link>
         <p className="pt-4 text-slate-500">{datePosted}</p>
         <p className="pt-2 text-2xl font-medium">{title}</p>
         <p className="pt-4 text-slate-500">{text.length > 200 ? text.slice(0, 200) : text}</p>
