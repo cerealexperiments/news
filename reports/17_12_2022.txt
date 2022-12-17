@@ -1,0 +1,6 @@
+yesterday:
+  - add PostPage component
+  - add routing functionality
+today:
+  - improve styling
+  - add popovers
