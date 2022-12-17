@@ -1,22 +1,16 @@
 import React from 'react';
-import Post from "./Post";
-
-type PostType = {
-  title: string;
-  content: string;
-  imageUrl: string;
-  datePosted: string;
-}
+import PostItem from "./PostItem";
+import { Post } from "../types";
 
 type PostsListProps = {
-  posts: PostType[];
+  posts: Post[];
 }
 
 const PostsList: React.FC<PostsListProps> = ({posts}) => {
   return (
-    <div className="flex flex-col gap-4 pt-4 divide-y">
+    <div className="flex flex-col gap-4 pt-4 divide-y pb-32">
       {posts.map(post => {
-        return <Post title={post.title} content={post.content} imageUrl={post.imageUrl} datePosted={post.datePosted}/>
+        return <PostItem title={post.title} text={post.text} image={post.image} datePosted={post.datePosted} isLiked={post.isLiked}/>
       })}
     </div>
   );
