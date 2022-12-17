@@ -1,4 +1,5 @@
 export type User = {
+  id: number;
   nickname?: string;
   name: string;
   lastName: string;
@@ -6,6 +7,7 @@ export type User = {
 }
 
 export type Post = {
+  id: number;
   title: string;
   text: string;
   image?: string;
@@ -15,6 +17,7 @@ export type Post = {
 }
 
 export type Comment = {
+  id: number,
   user: User;
   text: string;
   datePosted: string;
@@ -22,6 +25,7 @@ export type Comment = {
 }
 
 export type CommentReply = {
+  id: number,
   user: User;
   text: string;
   datePosted: string;
