@@ -1,0 +1,6 @@
+yesterday:
+  - add FavoritePosts page
+  - add popover menus on header
+today:
+  - add Profile page
+  - improve routing
