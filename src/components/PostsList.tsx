@@ -8,7 +8,7 @@ type PostsListProps = {
 
 const PostsList: React.FC<PostsListProps> = ({posts}) => {
   return (
-    <div className="flex flex-col gap-4 pt-4 divide-y pb-32">
+    <div className="flex flex-col gap-4 divide-y pb-32">
       {posts.map(post => {
         return <PostItem title={post.title} text={post.text} image={post.image} datePosted={post.datePosted} isLiked={post.isLiked} id={post.id}/>
       })}
