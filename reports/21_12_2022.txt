@@ -1,0 +1,5 @@
+yesterday:
+ - did nothing (problems: lack of time due to final exams on past 2 weeks)
+today:
+ - finish markup
+ - start working with web api
