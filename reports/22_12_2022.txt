@@ -1,0 +1,5 @@
+yesterday:
+ - refactoring (problems: same as before, lack of time due to exams. will spend more time today since they are over)
+today:
+ - finish markup
+ - start working with web api
