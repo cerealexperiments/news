@@ -1,0 +1,5 @@
+yesterday:
+ - finish markup
+today:
+ - implement authentication
+ - add popup windows
