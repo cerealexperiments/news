@@ -9,6 +9,9 @@ import FavoritePosts from "./pages/FavoritePosts";
 import Register from "./pages/Register";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -25,8 +28,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: "/post",
-        element: <PostPage />
+        path: "/post/:postId",
+        element: <PostPage />,
       },
       {
         path: "/favorites",
@@ -46,6 +49,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router}/>
+    </QueryClientProvider>
   </React.StrictMode>,
 )
