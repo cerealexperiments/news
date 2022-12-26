@@ -1,0 +1,6 @@
+yesterday:
+  - implement fetching data from an api
+  - start working on authentication
+today:
+  - finish authentication
+  - improve styling
