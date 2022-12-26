@@ -2,7 +2,7 @@ export type User = {
   id: number;
   nickname?: string;
   name: string;
-  lastName: string;
+  "last_name": string;
   profileImage?: string;
 }
 
@@ -10,16 +10,16 @@ export type Post = {
   id: number;
   title: string;
   text: string;
-  image?: string;
+  image: string;
   isLiked: boolean;
-  comments?: Comment[];
+  comment?: Comment[];
 }
 
 export type Comment = {
   id: number,
   user: User;
   text: string;
-  replies?: CommentReply[]
+  child?: CommentReply[]
 }
 
 export type CommentReply = {
