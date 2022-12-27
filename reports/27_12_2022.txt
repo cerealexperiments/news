@@ -1,0 +1,4 @@
+yesterday:
+  - implement basic authentication/registration
+today:
+  - rewrite the app using nextjs (or use the react-router version 6 instead of 6.4)
