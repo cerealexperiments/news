@@ -1,11 +1,15 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import logo from "../assets/logo.svg";
 import {useMutation} from "react-query";
 import axios from "axios";
+import AuthContext from "../context/AuthContext";
+import {Navigate} from "react-router-dom";
 
 const Auth = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+
+  const {login} = useContext(AuthContext);
 
   const authenticateUser = async () => {
     const response = await axios.post("https://megalab.pythonanywhere.com/login/", {
@@ -17,6 +21,10 @@ const Auth = () => {
   }
 
   const mutation = useMutation(authenticateUser);
+
+  useEffect(() => {
+    mutation.isSuccess && login();
+  }, [mutation.isSuccess])
 
   const handleSubmit = () => {
     mutation.mutate();
@@ -48,6 +56,13 @@ const Auth = () => {
           {mutation.isError && <p>Error occured!</p>}
           {mutation.isSuccess && <p>User logged in successfully!</p>}
           {mutation.isSuccess && <p>{mutation.data.token}</p>}
+          {mutation.isSuccess && (
+            () => {
+              console.log("authenticated!");
+              localStorage.setItem("token", mutation.data.token);
+              return <Navigate to="/"/>
+            }
+          )()}
           {mutation.isLoading && <p>Authenticating user...</p>}
         </>
       </div>
