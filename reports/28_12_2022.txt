@@ -1,0 +1,5 @@
+yesterday:
+  - rewrite routing using the react-router v6 (was not comfortable with new features in 6.4)
+  - implement authentication
+today:
+  - implement remaining features (profile page, favorite posts, etc.)
