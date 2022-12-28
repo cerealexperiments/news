@@ -4,12 +4,13 @@ import PostsList from "../components/PostsList";
 import axios from "axios";
 import {useQuery} from "react-query";
 
-const fetchPosts = async() => {
+const fetchPosts = async () => {
   const data = await axios.get("https://megalab.pythonanywhere.com/post/", {
     headers: {
-      Authorization: "Token 26c1cffd42f854414e7ccf2b3cbfb851ecb296ea"
+      Authorization: `Token ${localStorage.getItem("token")}`
     }
   })
+  console.log(data.data)
   return data.data;
 }
 
