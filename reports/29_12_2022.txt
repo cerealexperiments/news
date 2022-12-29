@@ -1,0 +1,4 @@
+yesterday:
+  - implement fetching data about favorite posts/user's posts
+today:
+  - implement adding posts and editing user data features
