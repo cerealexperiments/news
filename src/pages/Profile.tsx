@@ -6,6 +6,7 @@ import PostsList from "../components/PostsList";
 import {Post} from "../types";
 import {Dialog, Transition} from "@headlessui/react";
 import {useQuery} from "react-query";
+import NewPostModal from "../components/NewPostModal";
 
 const getProfileData = async () => {
   const response = await axios.get("https://megalab.pythonanywhere.com/user/", {
@@ -86,19 +87,19 @@ const Profile = () => {
             <div className="flex flex-col gap-4 pb-8">
               <div className="flex justify-between items-center">
                 <p>Фамилия</p>
-                <input onChange={(event) => setLastName(event.target.value)} value={lastName}
+                <input onChange={(event) => setLastName(event.target.value)} value={lastName || ""}
                        className="max-w-sm border border-slate-300 rounded-xl p-1.5"
                        type="text"/>
               </div>
               <div className="flex justify-between space-x-4 items-center">
                 <p>Имя</p>
-                <input onChange={(event) => setName(event.target.value)} value={name}
+                <input onChange={(event) => setName(event.target.value)} value={name || ""}
                        className="max-w-sm border border-slate-300 rounded-xl p-1.5"
                        type="text"/>
               </div>
               <div className="flex justify-between space-x-4 items-center">
                 <p>Никнейм</p>
-                <input onChange={(event) => setNickname(event.target.value)} value={nickname}
+                <input onChange={(event) => setNickname(event.target.value)} value={nickname || ""}
                        className="max-w-sm border border-slate-300 rounded-xl p-1.5"
                        type="text"/>
               </div>
@@ -114,84 +115,7 @@ const Profile = () => {
           <button onClick={openModal} className="py-1 px-6 rounded-xl bg-violet-700 text-white self-baseline">Новая
             публикация
           </button>
-          <Transition appear show={isOpen} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={closeModal}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-150"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-150"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black bg-opacity-25"/>
-              </Transition.Child>
-
-              <div className="fixed inset-0 overflow-y-auto">
-                <div className="flex min-h-full items-center justify-center p-4 text-center">
-                  <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                  >
-                    <Dialog.Panel
-                      className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                      <div className="mt-2 flex gap-8 items-center justify-start">
-                        <p className="w-1/2">
-                          Обложка новости
-                        </p>
-                        <div className="flex justify-start w-full">
-                          <button className="py-1 px-4 border border-gray-300 text-sm rounded">Загрузить</button>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 flex gap-8 items-center">
-                        <p className="w-1/2">
-                          Заголовок
-                        </p>
-                        <input className="w-full py-1 border border-gray-300 rounded" type="text"/>
-                      </div>
-
-                      <div className="mt-4 flex gap-8 items-center">
-                        <p className="w-1/2">
-                          Краткое описание
-                        </p>
-                        <input className="w-full py-1 border border-gray-300 rounded" type="text"/>
-                      </div>
-
-                      <div className="mt-4 flex gap-8 items-start">
-                        <p className="w-1/2">
-                          Текст новости
-                        </p>
-                        <textarea rows={4} className="w-full py-1 border border-gray-300 rounded"/>
-                      </div>
-
-                      <div className="mt-4 flex gap-8 items-start">
-                        <p className="w-1/2">
-                          Выбрать категорию
-                        </p>
-                        <select className="w-full bg-white rounded border border-gray-300 py-1 px-2" name="категория">
-                          <option disabled>Не выбрано</option>
-                          <option>Politics</option>
-                          <option>Sports</option>
-                        </select>
-                      </div>
-
-                      <div className="mt-8 flex justify-center">
-                        <button className="py-1 px-12 bg-violet-700 rounded-xl text-white font-medium">Создать</button>
-                      </div>
-
-                    </Dialog.Panel>
-                  </Transition.Child>
-                </div>
-              </div>
-            </Dialog>
-          </Transition>
+          <NewPostModal isOpen={isOpen} closeModal={closeModal}/>
         </div>
         {postsQuery.isLoading && <p>Loading your posts...</p>}
         {postsQuery.isSuccess && <PostsList posts={postsQuery.data}/>}
