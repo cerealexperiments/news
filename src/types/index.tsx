@@ -15,6 +15,11 @@ export type Post = {
   comment?: Comment[];
 }
 
+export type Tag = {
+  id: number,
+  name: string
+}
+
 export type Comment = {
   id: number,
   user: User;
