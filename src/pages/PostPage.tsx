@@ -1,32 +1,17 @@
 import React from 'react';
 import {IoArrowBackSharp, IoShareSocialOutline} from "react-icons/io5";
 import {Link, useParams} from "react-router-dom";
-import axios from "axios";
 import {useQuery} from "react-query";
 import {Comment, CommentReply} from "../types";
+import {fetchPostData} from "../helpers/data";
 import defaultImage from "../assets/defaultImage.png"
 
-let imageUrl: string;
-
-export const fetchPostData = async (postId: number | undefined) => {
-  const data = await axios.get(`https://megalab.pythonanywhere.com/post/${postId}/`, {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  if (data.data.image === null) {
-    imageUrl = defaultImage;
-  } else {
-    imageUrl = `https://megalab.pythonanywhere.com/${data.data.image}`;
-  }
-  console.log(data.data);
-  return data.data;
-}
-
 const PostPage: React.FC = () => {
+
   const {postId} = useParams();
-  const query = useQuery("post", () => fetchPostData(Number(postId)), {
-    cacheTime: 0
+  const query = useQuery({
+    queryKey: [postId],
+    queryFn: () => fetchPostData(Number(postId))
   });
 
   return (
@@ -39,7 +24,8 @@ const PostPage: React.FC = () => {
             <p className="pt-6 text-2xl font-medium">{query.data.title}</p>
             <p
               className="pt-4 text-slate-500">{query.data.text.length > 200 ? query.data.text.slice(0, 200) : query.data.text}</p>
-            <img className="pt-6 max-h-[500px] h-full max-w-full object-cover object-center" src={imageUrl}
+            <img className="pt-6 max-h-[500px] h-full max-w-full object-cover object-center"
+                 src={query.data.image === null ? defaultImage : `https://megalab.pythonanywhere.com/${query.data.image}`}
                  alt="post title"/>
             <p
               className="pt-4 pb-6 text-slate-500">{query.data.text.length > 200 ? query.data.text.slice(200, query.data.text.length) : null}</p>

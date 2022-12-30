@@ -1,23 +1,14 @@
 import React from 'react';
 import PostsList from "../components/PostsList";
 import {useQuery} from "react-query";
-import axios from "axios";
+import {fetchFavoritePosts} from "../helpers/data";
 
-const getLikedPosts = async () => {
-  const response = await axios.get("https://megalab.pythonanywhere.com/like/", {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  console.log(response.data);
-  return response.data;
-}
 
 const FavoritePosts = () => {
 
   const query = useQuery({
     queryKey: "favoritePosts",
-    queryFn: getLikedPosts
+    queryFn: fetchFavoritePosts
   })
 
   return (

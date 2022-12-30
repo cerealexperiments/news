@@ -1,31 +1,23 @@
 import React, {useState} from 'react';
+import {Link} from "react-router-dom";
 import logo from "../assets/logo.svg";
-import axios from "axios";
 import {useMutation} from "react-query";
+import {registerUser} from "../helpers/data";
 
 const Register = () => {
+  
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const registerUser = async () => {
-    const response = await axios.post("https://megalab.pythonanywhere.com/registration/", {
-      name: name,
-      ["last_name"]: lastName,
-      nickname: nickname,
-      password: password,
-      ["password2"]: confirmPassword
-    })
-    console.log(response.data);
-    return response.data;
-  }
-
-  const mutation = useMutation(registerUser);
+  const registerMutation = useMutation({
+    mutationFn: () => registerUser(name, lastName, nickname, password, confirmPassword)
+  });
 
   const handleSubmit = () => {
-    mutation.mutate();
+    registerMutation.mutate();
   }
 
   return (
@@ -66,12 +58,12 @@ const Register = () => {
                 className="py-1.5 px-8 rounded-xl bg-violet-700 text-white w-fit self-center">Регистрация
         </button>
         <>
-          {mutation.isError && <p>Error occured!</p>}
-          {mutation.isSuccess && <p>User registered successfully!</p>}
-          {mutation.isLoading && <p>Registering user...</p>}
+          {registerMutation.isLoading && <p>Registering user...</p>}
+          {registerMutation.isError && <p>Error occured!</p>}
+          {registerMutation.isSuccess && <p>User registered successfully!</p>}
         </>
         <p className="text-sm text-slate-600 text-center pt-4">Уже есть логин?
-          <a className="underline text-blue-800" href="src/pages/Register#"> Войти</a>
+          <Link to="/auth" className="underline text-blue-800"> Войти</Link>
         </p>
       </div>
     </div>

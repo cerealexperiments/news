@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from 'react';
 import logo from "../assets/logo.svg";
 import {useMutation} from "react-query";
-import axios from "axios";
 import AuthContext from "../context/AuthContext";
 import {Navigate} from "react-router-dom";
+import {authenticateUser} from "../helpers/data";
 
 const Auth = () => {
   const [nickname, setNickname] = useState("");
@@ -11,23 +11,20 @@ const Auth = () => {
 
   const {login} = useContext(AuthContext);
 
-  const authenticateUser = async () => {
-    const response = await axios.post("https://megalab.pythonanywhere.com/login/", {
-      nickname: nickname,
-      password: password,
-    })
-    console.log(response.data);
-    return response.data;
-  }
-
-  const mutation = useMutation(authenticateUser);
+  const authMutation = useMutation({
+    mutationFn: () => authenticateUser(nickname, password)
+  });
 
   useEffect(() => {
-    mutation.isSuccess && login();
-  }, [mutation.isSuccess])
+    if (authMutation.isSuccess) {
+      console.log("authenticated!");
+      localStorage.setItem("token", authMutation.data.token);
+      login();
+    }
+  }, [authMutation.isSuccess])
 
   const handleSubmit = () => {
-    mutation.mutate();
+    authMutation.mutate();
   }
 
   return (
@@ -53,17 +50,12 @@ const Auth = () => {
                 className="py-1.5 px-16 rounded-xl bg-violet-700 text-white w-fit self-center">Войти
         </button>
         <>
-          {mutation.isError && <p>Error occured!</p>}
-          {mutation.isSuccess && <p>User logged in successfully!</p>}
-          {mutation.isSuccess && <p>{mutation.data.token}</p>}
-          {mutation.isSuccess && (
-            () => {
-              console.log("authenticated!");
-              localStorage.setItem("token", mutation.data.token);
-              return <Navigate to="/"/>
-            }
-          )()}
-          {mutation.isLoading && <p>Authenticating user...</p>}
+          {authMutation.isError && <p>Error occured!</p>}
+          {authMutation.isSuccess && <p>User logged in successfully!</p>}
+          {authMutation.isSuccess && <p>{authMutation.data.token}</p>}
+          {authMutation.isSuccess && <Navigate to="/"/>
+          }
+          {authMutation.isLoading && <p>Authenticating user...</p>}
         </>
       </div>
     </div>

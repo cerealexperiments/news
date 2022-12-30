@@ -1,22 +1,11 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import defaultPic from "../assets/defaultProfile.svg"
 import {FiDownload, FiTrash2} from "react-icons/fi";
 import axios from "axios";
 import PostsList from "../components/PostsList";
-import {Post} from "../types";
-import {Dialog, Transition} from "@headlessui/react";
 import {useQuery} from "react-query";
 import NewPostModal from "../components/NewPostModal";
-
-const getProfileData = async () => {
-  const response = await axios.get("https://megalab.pythonanywhere.com/user/", {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  console.log(response.data);
-  return response.data;
-}
+import {fetchProfileData} from "../helpers/data";
 
 const getUserPosts = async (username: string) => {
   const response = await axios.get(`https://megalab.pythonanywhere.com/post/?author=${username}`, {
@@ -44,9 +33,12 @@ const Profile = () => {
     setIsOpen(true);
   }
 
-  const query = useQuery("profile", getProfileData);
+  const profileQuery = useQuery({
+    queryKey: "profile",
+    queryFn: fetchProfileData
+  });
 
-  const userNickname = query.data?.nickname;
+  const userNickname = profileQuery.data?.nickname;
 
   const postsQuery = useQuery({
     queryKey: "userPosts",
@@ -54,12 +46,11 @@ const Profile = () => {
     enabled: !!userNickname
   })
 
-
   useEffect(() => {
-    setNickname(query?.data?.nickname);
-    setName(query?.data?.name);
-    setLastName(query?.data?.["last_name"]);
-  }, [query?.isSuccess])
+    setNickname(profileQuery?.data?.nickname);
+    setName(profileQuery?.data?.name);
+    setLastName(profileQuery?.data?.["last_name"]);
+  }, [profileQuery?.isSuccess])
 
   const handleSubmit = async () => {
     console.log(name, nickname, lastName)
@@ -67,8 +58,8 @@ const Profile = () => {
 
   return (
     <div className="pt-12 max-w-screen-xl mx-auto w-full">
-      {query.isLoading && <p>Loading user data...</p>}
-      {query.isSuccess && <>
+      {profileQuery.isLoading && <p>Loading user data...</p>}
+      {profileQuery.isSuccess && <>
         <div className="flex items-center justify-start gap-32">
           <div className="flex flex-col ">
             <img className="p-12 bg-neutral-200 rounded-full" src={defaultPic} alt="profile image"/>

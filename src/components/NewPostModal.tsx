@@ -1,54 +1,32 @@
 import React, {useState, Fragment, ChangeEvent} from 'react';
 import {Dialog, Transition} from "@headlessui/react";
-import axios from "axios";
 import {useMutation, useQuery} from "react-query";
 import {Tag} from "../types";
+import {fetchTags, submitPost} from "../helpers/data";
 
 type NewPostModalProps = {
   isOpen: boolean,
   closeModal: () => void,
 }
 
-const getTagsList = async () => {
-  const response = await axios.get("https://megalab.pythonanywhere.com/tag/", {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  console.log(response.data)
-  return response.data;
-}
-
 const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
-
-  const submitPost = async () => {
-    const response = await axios.post("https://megalab.pythonanywhere.com/post/", {
-      title: title,
-      text: text,
-      image: image,
-      tag: tag
-    }, {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("token")}`,
-        ["Content-Type"]: "multipart/form-data"
-      },
-    })
-    console.log(response.data);
-    return response.data;
-  }
 
   const [image, setImage] = useState<File>();
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [tag, setTag] = useState<string>("");
 
-  const query = useQuery("tags", getTagsList)
+  const tagsQuery = useQuery({
+    queryKey: "tags",
+    queryFn: fetchTags
+  })
 
-  const mutation = useMutation(submitPost)
+  const newPostMutation = useMutation({
+    mutationFn: () => submitPost(title, text, image, tag)
+  })
 
   const handleSubmit = () => {
-    console.log(image, title, text, tag)
-    mutation.mutate();
+    newPostMutation.mutate();
   }
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -119,12 +97,12 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                   <p className="w-1/2">
                     Выбрать категорию
                   </p>
-                  {query.isLoading && <p>loading options...</p>}
-                  {query.isSuccess && <select onChange={(event) => setTag(event.target.value)
+                  {tagsQuery.isLoading && <p>loading options...</p>}
+                  {tagsQuery.isSuccess && <select onChange={(event) => setTag(event.target.value)
                   } defaultValue="Не выбрано"
-                                              className="w-full bg-white rounded border border-gray-300 py-1 px-2"
-                                              name="категория">
-                    {query.data?.map((item: Tag) => {
+                                                  className="w-full bg-white rounded border border-gray-300 py-1 px-2"
+                                                  name="категория">
+                    {tagsQuery.data?.map((item: Tag) => {
                       return <option key={item.id} value={item.name}>
                         {item.name}
                       </option>
@@ -139,8 +117,8 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                           className="py-1 px-12 bg-violet-700 rounded-xl text-white font-medium">Создать
                   </button>
                 </div>
-                {mutation.isLoading && <p>submitting your post...</p>}
-                {mutation.isSuccess && <p>post submitted successfully!</p>}
+                {newPostMutation.isLoading && <p>submitting your post...</p>}
+                {newPostMutation.isSuccess && <p>post submitted successfully!</p>}
 
               </Dialog.Panel>
             </Transition.Child>
