@@ -87,12 +87,17 @@ export const submitPost = async (title: string, text: string, image: File | unde
   return response.data;
 }
 
-export const editUserData = async (nickname: string, name: string, lastName: string, profileImage: File | undefined) => {
+export const editUserData = async (nickname: string, name: string, lastName: string, profileImage: null | File) => {
   const response = await axios.put("https://megalab.pythonanywhere.com/user/", {
     nickname: nickname,
     name: name,
     ["last_name"]: lastName,
-    ["profile_image"]: profileImage
+    ["profile_image"]: profileImage || null
+  }, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+      ["Content-Type"]: "multipart/form-data"
+    }
   })
   console.log(response.data);
   return response.data;
