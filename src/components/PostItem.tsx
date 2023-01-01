@@ -5,7 +5,7 @@ import {Post} from "../types";
 import {Link} from "react-router-dom";
 import defaultImage from "../assets/defaultImage.png";
 import {useMutation} from "react-query";
-import {removePost} from "../helpers/data";
+import {likePost, removePost} from "../helpers/data";
 
 type PostItemProps = Post & {
   canDelete: boolean
@@ -13,12 +13,16 @@ type PostItemProps = Post & {
 
 const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) => {
 
+  const likeMutation = useMutation({
+    mutationFn: () => likePost(id)
+  })
+
   const deleteMutation = useMutation({
     mutationFn: () => removePost(id)
   })
 
   const handleClick = () => {
-    deleteMutation.mutate();
+    canDelete ? deleteMutation.mutate() : likeMutation.mutate();
   }
 
   return (
@@ -34,8 +38,10 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
         <IoShareSocialOutline size="24px" color="#64748b"/>
         {deleteMutation.isLoading && <p>Deleting this post...</p>}
         {deleteMutation.isSuccess && <p>Post deleted!</p>}
+        {likeMutation.isLoading && <p>Liking this post...</p>}
+        {likeMutation.isSuccess && <p>Post liked!</p>}
         {canDelete ? <FiTrash2 onClick={handleClick} className="absolute top-0 right-0 cursor-pointer" size="24px"/> :
-          <IoHeartOutline className="absolute top-0 right-0 cursor-pointer" size="24px"/>}
+          <IoHeartOutline onClick={handleClick} className="absolute top-0 right-0 cursor-pointer" size="24px"/>}
       </div>
     </div>
   );
