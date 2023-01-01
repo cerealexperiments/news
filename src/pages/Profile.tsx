@@ -134,7 +134,7 @@ const Profile = () => {
           <NewPostModal isOpen={isOpen} closeModal={closeModal}/>
         </div>
         {postsQuery.isLoading && <p>Loading your posts...</p>}
-        {postsQuery.isSuccess && <PostsList posts={postsQuery.data}/>}
+        {postsQuery.isSuccess && <PostsList canDelete={true} posts={postsQuery.data}/>}
       </>}
     </div>
   );

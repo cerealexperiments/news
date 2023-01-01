@@ -87,6 +87,16 @@ export const submitPost = async (title: string, text: string, image: File | unde
   return response.data;
 }
 
+export const removePost = async (postId: number) => {
+  const response = await axios.delete(`https://megalab.pythonanywhere.com/post/${postId}`, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    }
+  })
+  console.log(response);
+  return response.data;
+}
+
 export const editUserData = async (nickname: string, name: string, lastName: string, profileImage: null | File) => {
   const response = await axios.put("https://megalab.pythonanywhere.com/user/", {
     nickname: nickname,
