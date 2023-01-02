@@ -109,6 +109,20 @@ export const likePost = async (postId: number) => {
   return response.data;
 }
 
+export const submitComment = async (postId: number, text: string) => {
+  const response = await axios.post("https://megalab.pythonanywhere.com/comment/", {
+    post: postId,
+    text: text
+  }, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    }
+  })
+  console.log(response.data);
+  return response.data;
+}
+
+
 export const editUserData = async (nickname: string, name: string, lastName: string, profileImage: null | File) => {
   const response = await axios.put("https://megalab.pythonanywhere.com/user/", {
     nickname: nickname,
