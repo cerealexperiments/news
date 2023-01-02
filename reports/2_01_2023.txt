@@ -1,0 +1,5 @@
+yesterday:
+  - add features of adding posts, editing user data, deleting posts and liking them (problems: could not implement user profile picture deletion since passing null does not work for some reason)
+today:
+  - improve styling
+  - add comments feature
