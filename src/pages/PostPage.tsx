@@ -2,10 +2,10 @@ import React, {useState} from 'react';
 import {IoArrowBackSharp, IoShareSocialOutline} from "react-icons/io5";
 import {Link, useParams} from "react-router-dom";
 import {useMutation, useQuery} from "react-query";
-import {Comment, CommentReply} from "../types";
 import {fetchPostData, submitComment} from "../helpers/data";
 import defaultImage from "../assets/defaultImage.png"
 import Spinner from "../components/Spinner";
+import CommentsList from "../components/CommentsList";
 
 const PostPage: React.FC = () => {
 
@@ -40,24 +40,7 @@ const PostPage: React.FC = () => {
             <IoShareSocialOutline size="24" color="#64748b"/>
             <div className="pt-12">
               <p className="text-2xl font-medium pb-8">Комментарии</p>
-              {postQuery.data.comment?.map((comment: Comment) => {
-                return <div key={comment.id} className="">
-                  <p className="font-medium text-xl">{`${comment.user.name} ${comment.user["last_name"]}`}</p>
-                  <p className="text-slate-500 pt-1.5">{comment.text}</p>
-                  <div className="pt-1.5 flex gap-8">
-                    <p className="underline text-violet-600">Ответить</p>
-                  </div>
-                  {comment.child?.map((reply: CommentReply) => {
-                    return <div key={reply.id} className="pl-14 pt-6">
-                      <p className="font-medium text-xl">{`${reply.user.name} ${reply.user["last_name"]}`}</p>
-                      <p className="text-slate-500 pt-1.5">{reply.text}</p>
-                      <div className="pt-1.5 flex gap-8">
-                        <p className="underline text-violet-600">Ответить</p>
-                      </div>
-                    </div>
-                  })}
-                </div>
-              })}
+              {postQuery.data.comment ? <CommentsList comments={postQuery.data.comment}/> : <p>No comments yet</p>}
             </div>
             <div className="flex pt-8 gap-8 pb-32">
               <input
