@@ -5,6 +5,7 @@ import {useMutation, useQuery} from "react-query";
 import {Comment, CommentReply} from "../types";
 import {fetchPostData, submitComment} from "../helpers/data";
 import defaultImage from "../assets/defaultImage.png"
+import Spinner from "../components/Spinner";
 
 const PostPage: React.FC = () => {
 
@@ -22,12 +23,12 @@ const PostPage: React.FC = () => {
   })
 
   return (
-    <div className="max-w-screen-xl mx-auto pt-8 w-full pb-32">
+    <div className="max-w-screen-xl flex-1 mx-auto flex pt-8 w-full">
+      {postQuery.isLoading && <Spinner/>}
       <div className="max-w-[845px]">
-        <Link to={"/"}><IoArrowBackSharp size="30"/></Link>
-        {postQuery.isLoading && <p>Loading...</p>}
         {postQuery.isSuccess &&
           <>
+            <Link to={"/"}><IoArrowBackSharp size="30"/></Link>
             <p className="pt-6 text-2xl font-medium">{postQuery.data.title}</p>
             <p
               className="pt-4 text-slate-500">{postQuery.data.text.length > 200 ? postQuery.data.text.slice(0, 200) : postQuery.data.text}</p>
@@ -58,20 +59,20 @@ const PostPage: React.FC = () => {
                 </div>
               })}
             </div>
+            <div className="flex pt-8 gap-8 pb-32">
+              <input
+                onChange={(event) => setCommentText(event.target.value)}
+                value={commentText}
+                className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full" type="text"
+                placeholder="Напишите комментарий..."/>
+              <button onClick={() => commentMutation.mutate()}
+                      className="bg-violet-700 py-2 px-8 rounded-xl text-white font-medium">Ответить
+              </button>
+              {commentMutation.isLoading && <p>submitting your comment...</p>}
+              {commentMutation.isSuccess && <p>comment submitted!</p>}
+            </div>
           </>
         }
-        <div className="flex pt-8 gap-8">
-          <input
-            onChange={(event) => setCommentText(event.target.value)}
-            value={commentText}
-            className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full" type="text"
-            placeholder="Напишите комментарий..."/>
-          <button onClick={() => commentMutation.mutate()}
-                  className="bg-violet-700 py-2 px-8 rounded-xl text-white font-medium">Ответить
-          </button>
-          {commentMutation.isLoading && <p>submitting your comment...</p>}
-          {commentMutation.isSuccess && <p>comment submitted!</p>}
-        </div>
       </div>
     </div>
   );

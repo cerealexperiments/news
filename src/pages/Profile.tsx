@@ -6,6 +6,7 @@ import PostsList from "../components/PostsList";
 import {useMutation, useQuery} from "react-query";
 import NewPostModal from "../components/NewPostModal";
 import {fetchProfileData, editUserData} from "../helpers/data";
+import Spinner from "../components/Spinner";
 
 const getUserPosts = async (username: string) => {
   const response = await axios.get(`https://megalab.pythonanywhere.com/post/?author=${username}`, {
@@ -70,8 +71,8 @@ const Profile = () => {
   }
 
   return (
-    <div className="pt-12 max-w-screen-xl mx-auto w-full">
-      {profileQuery.isLoading && <p>Loading user data...</p>}
+    <div className="pt-12 max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
+      {profileQuery.isLoading && <Spinner/>}
       {profileQuery.isSuccess && <>
         <div className="flex items-center justify-start gap-32">
           <div className="flex flex-col">
@@ -133,7 +134,7 @@ const Profile = () => {
           </button>
           <NewPostModal isOpen={isOpen} closeModal={closeModal}/>
         </div>
-        {postsQuery.isLoading && <p>Loading your posts...</p>}
+        {postsQuery.isLoading && <Spinner/>}
         {postsQuery.isSuccess && <PostsList canDelete={true} posts={postsQuery.data}/>}
       </>}
     </div>
