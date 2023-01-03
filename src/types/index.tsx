@@ -3,7 +3,7 @@ export type User = {
   nickname?: string;
   name: string;
   "last_name": string;
-  profileImage?: string;
+  "profile_image"?: string;
 }
 
 export type Post = {
