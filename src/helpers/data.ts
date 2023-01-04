@@ -31,16 +31,6 @@ export const fetchPosts = async () => {
   return response.data;
 }
 
-export const fetchPostData = async (postId: number | undefined) => {
-  const data = await axios.get(`https://megalab.pythonanywhere.com/post/${postId}/`, {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  console.log(data.data);
-  return data.data;
-}
-
 export const fetchFavoritePosts = async () => {
   const response = await axios.get("https://megalab.pythonanywhere.com/like/", {
     headers: {
@@ -103,6 +93,20 @@ export const submitComment = async (postId: number, text: string) => {
   const response = await axios.post("https://megalab.pythonanywhere.com/comment/", {
     post: postId,
     text: text
+  }, {
+    headers: {
+      Authorization: `Token ${localStorage.getItem("token")}`,
+    }
+  })
+  console.log(response.data);
+  return response.data;
+}
+
+export const replyToComment = async (postId: number, text: string, parentCommentId: number) => {
+  const response = await axios.post("https://megalab.pythonanywhere.com/comment/", {
+    post: postId,
+    text: text,
+    parent: parentCommentId
   }, {
     headers: {
       Authorization: `Token ${localStorage.getItem("token")}`,

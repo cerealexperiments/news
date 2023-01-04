@@ -4,10 +4,10 @@ import {Post} from "../types";
 
 type PostsListProps = {
   posts: Post[];
-  canDelete: boolean
+  canDelete?: boolean;
 }
 
-const PostsList: React.FC<PostsListProps> = ({posts, canDelete}) => {
+const PostsList: React.FC<PostsListProps> = ({posts, canDelete = false}) => {
   return (
     <div className="flex flex-col gap-4 divide-y pb-32 flex-1">
       {posts.map(post => {

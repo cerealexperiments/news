@@ -1,11 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {IoArrowBackSharp, IoShareSocialOutline} from "react-icons/io5";
 import {Link, useParams} from "react-router-dom";
-import {useMutation, useQuery} from "react-query";
-import {fetchPostData, submitComment} from "../helpers/data";
+import {useMutation} from "react-query";
+import {submitComment} from "../helpers/data";
 import defaultImage from "../assets/defaultImage.png"
 import Spinner from "../components/Spinner";
 import CommentsList from "../components/CommentsList";
+import {usePostData} from "../helpers/usePostData";
 
 const PostPage: React.FC = () => {
 
@@ -13,10 +14,7 @@ const PostPage: React.FC = () => {
 
   const [commentText, setCommentText] = useState<string>("");
 
-  const postQuery = useQuery({
-    queryKey: [postId],
-    queryFn: () => fetchPostData(Number(postId)),
-  });
+  const postQuery = usePostData(Number(postId));
 
   const commentMutation = useMutation({
     mutationFn: () => submitComment(Number(postId), commentText)
@@ -46,7 +44,8 @@ const PostPage: React.FC = () => {
             <IoShareSocialOutline size="24" color="#64748b"/>
             <div className="pt-12">
               <p className="text-2xl font-medium pb-8">Комментарии</p>
-              {postQuery.data.comment ? <CommentsList comments={postQuery.data.comment}/> : <p>No comments yet</p>}
+              {postQuery.data.comment ? <CommentsList comments={postQuery.data.comment} postId={Number(postId)}/> :
+                <p>No comments yet</p>}
             </div>
             <div className="flex pt-8 gap-8 pb-32">
               <input
