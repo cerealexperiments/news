@@ -51,16 +51,6 @@ export const fetchFavoritePosts = async () => {
   return response.data;
 }
 
-export const fetchProfileData = async () => {
-  const response = await axios.get("https://megalab.pythonanywhere.com/user/", {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  console.log(response.data);
-  return response.data;
-}
-
 export const fetchTags = async () => {
   const response = await axios.get("https://megalab.pythonanywhere.com/tag/", {
     headers: {

@@ -1,8 +1,9 @@
-import React, {useState, Fragment, ChangeEvent} from 'react';
+import React, {useState, Fragment, ChangeEvent, useEffect} from 'react';
 import {Dialog, Transition} from "@headlessui/react";
 import {useMutation, useQuery} from "react-query";
 import {Tag} from "../types";
 import {fetchTags, submitPost} from "../helpers/data";
+import {useUserPosts} from "../helpers/useUserPosts";
 
 type NewPostModalProps = {
   isOpen: boolean,
@@ -35,6 +36,14 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
     }
     setImage(event.target.files[0])
   }
+
+  const postsQuery = useUserPosts();
+
+  useEffect(() => {
+    if (newPostMutation.isSuccess) {
+      postsQuery.refetch().then(() => console.log("refetched"));
+    }
+  }, [newPostMutation.status])
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
@@ -71,7 +80,7 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                   <div className="flex justify-start w-full">
                     <input
                       onChange={handleFileChange}
-                      className="file:py-1 file:px-4 file:border file:border-gray-300 file:text-sm file:rounded outline-none file:bg-white"
+                      className="file:py-1 file:px-4 file:border file:border-gray-300 file:text-sm file:rounded outline-none file:bg-white file:border-solid"
                       type="file" accept="image"
                       title="Загрузить"/>
                   </div>
@@ -118,7 +127,11 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                   </button>
                 </div>
                 {newPostMutation.isLoading && <p>submitting your post...</p>}
-                {newPostMutation.isSuccess && <p>post submitted successfully!</p>}
+                {newPostMutation.isSuccess && (
+                  <>
+                    <p>post submitted successfully!</p>
+                  </>
+                )}
 
               </Dialog.Panel>
             </Transition.Child>

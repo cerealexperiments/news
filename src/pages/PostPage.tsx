@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {IoArrowBackSharp, IoShareSocialOutline} from "react-icons/io5";
 import {Link, useParams} from "react-router-dom";
 import {useMutation, useQuery} from "react-query";
@@ -22,6 +22,12 @@ const PostPage: React.FC = () => {
     mutationFn: () => submitComment(Number(postId), commentText)
   })
 
+  useEffect(() => {
+    postQuery.refetch().then(() => {
+      console.log("refetch");
+    });
+  }, [commentMutation?.data])
+
   return (
     <div className="max-w-screen-xl flex-1 mx-auto flex pt-8 w-full">
       {postQuery.isLoading && <Spinner/>}
@@ -32,7 +38,7 @@ const PostPage: React.FC = () => {
             <p className="pt-6 text-2xl font-medium">{postQuery.data.title}</p>
             <p
               className="pt-4 text-slate-500">{postQuery.data.text.length > 200 ? postQuery.data.text.slice(0, 200) : postQuery.data.text}</p>
-            <img className="pt-6 max-h-[500px] h-full max-w-full object-cover object-center"
+            <img className="pt-6 max-h-[500px] max-w-full object-cover object-center"
                  src={postQuery.data.image === null ? defaultImage : `https://megalab.pythonanywhere.com/${postQuery.data.image}`}
                  alt="post title"/>
             <p

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {IoShareSocialOutline, IoHeartOutline} from "react-icons/io5";
 import {FiTrash2} from "react-icons/fi";
 import {Post} from "../types";
@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import defaultImage from "../assets/defaultImage.png";
 import {useMutation} from "react-query";
 import {likePost, removePost} from "../helpers/data";
+import {useUserPosts} from "../helpers/useUserPosts";
 
 type PostItemProps = Post & {
   canDelete: boolean
@@ -24,6 +25,14 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
   const handleClick = () => {
     canDelete ? deleteMutation.mutate() : likeMutation.mutate();
   }
+
+  const postsQuery = useUserPosts();
+
+  useEffect(() => {
+    if (deleteMutation.isSuccess) {
+      postsQuery.refetch().then(() => console.log("refetched"));
+    }
+  }, [deleteMutation.status])
 
   return (
     <div className="flex gap-6 [&:not(:first-child)]:pt-4">

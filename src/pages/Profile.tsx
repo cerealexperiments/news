@@ -1,22 +1,13 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import defaultImage from "../assets/defaultProfile.png"
 import {FiDownload, FiTrash2} from "react-icons/fi";
-import axios from "axios";
 import PostsList from "../components/PostsList";
-import {useMutation, useQuery} from "react-query";
+import {useMutation} from "react-query";
 import NewPostModal from "../components/NewPostModal";
-import {fetchProfileData, editUserData} from "../helpers/data";
+import {editUserData} from "../helpers/data";
 import Spinner from "../components/Spinner";
-
-const getUserPosts = async (username: string) => {
-  const response = await axios.get(`https://megalab.pythonanywhere.com/post/?author=${username}`, {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  console.log(response.data);
-  return response.data;
-}
+import {useUserPosts} from "../helpers/useUserPosts";
+import {useUserData} from "../helpers/useUserData";
 
 const Profile = () => {
 
@@ -42,28 +33,24 @@ const Profile = () => {
     setImage(event.target.files[0])
   }
 
-  const profileQuery = useQuery({
-    queryKey: "profile",
-    queryFn: fetchProfileData
-  });
+  const userData = useUserData();
 
   const profileMutation = useMutation({
     mutationFn: () => editUserData(nickname, name, lastName, image)
   })
 
-  const userNickname = profileQuery.data?.nickname;
 
-  const postsQuery = useQuery({
-    queryKey: "userPosts",
-    queryFn: () => getUserPosts(userNickname),
-    enabled: !!userNickname
-  })
+  const postsQuery = useUserPosts()
 
   useEffect(() => {
-    setNickname(profileQuery?.data?.nickname);
-    setName(profileQuery?.data?.name);
-    setLastName(profileQuery?.data?.["last_name"]);
-  }, [profileQuery?.isSuccess])
+    setNickname(userData?.data?.nickname);
+    setName(userData?.data?.name);
+    setLastName(userData?.data?.["last_name"]);
+  }, [userData?.isSuccess])
+
+  useEffect(() => {
+    userData.refetch().then(() => console.log("refetched"));
+  }, [profileMutation.isSuccess])
 
   const handleSubmit = async () => {
     console.log(name, nickname, lastName, image)
@@ -72,12 +59,12 @@ const Profile = () => {
 
   return (
     <div className="pt-12 max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
-      {profileQuery.isLoading && <Spinner/>}
-      {profileQuery.isSuccess && <>
+      {userData.isLoading && <Spinner/>}
+      {userData.isSuccess && <>
         <div className="flex items-center justify-start gap-32">
           <div className="flex flex-col">
             <img className="bg-neutral-200 rounded-full w-72 h-72 object-cover"
-                 src={profileQuery.data["profile_image"] === null ? defaultImage : `https://megalab.pythonanywhere.com/${profileQuery.data["profile_image"]}`}
+                 src={userData.data["profile_image"] === null ? defaultImage : `https://megalab.pythonanywhere.com/${userData.data["profile_image"]}`}
                  alt="profile image"/>
             <div className="flex gap-6 items-baseline justify-center">
               <div className="flex items-center gap-3 pt-4">
