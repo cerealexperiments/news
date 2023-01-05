@@ -5,6 +5,7 @@ import CommentReplyItem from "./CommentReplyItem";
 import {replyToComment} from "../helpers/data";
 import {useMutation} from "react-query";
 import {usePostData} from "../helpers/usePostData";
+import {motion} from "framer-motion";
 
 type CommentItemProps = Comment & {
   postId: number
@@ -28,7 +29,17 @@ const CommentItem: React.FC<CommentItemProps> = ({id, user, text, child, postId}
   }, [replyMutation.status])
 
   return (
-    <div key={id}>
+    <motion.div key={id}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1
+                }}
+                transition={{
+                  duration: 0.3
+                }}
+    >
       <div className="flex items-center">
         <img className="h-10 w-10 rounded-full mr-4"
              src={user.profile_image !== null ? `https://megalab.pythonanywhere.com/${user.profile_image}` : defaultProfile}
@@ -59,7 +70,7 @@ const CommentItem: React.FC<CommentItemProps> = ({id, user, text, child, postId}
       </div>
       {child?.map((reply: CommentReply) => <CommentReplyItem key={reply.id} id={reply.id} user={reply.user}
                                                              text={reply.text}/>)}
-    </div>
+    </motion.div>
   );
 };
 

@@ -7,6 +7,7 @@ import defaultImage from "../assets/defaultImage.png";
 import {useMutation} from "react-query";
 import {likePost, removePost} from "../helpers/data";
 import {useUserPosts} from "../helpers/useUserPosts";
+import {motion} from "framer-motion";
 
 type PostItemProps = Post & {
   canDelete: boolean
@@ -35,7 +36,17 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
   }, [deleteMutation.status])
 
   return (
-    <div className="flex gap-6 [&:not(:first-child)]:pt-4">
+    <motion.div key={id}
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                }}
+                transition={{
+                  duration: 0.3
+                }}
+                className="flex gap-6 [&:not(:first-child)]:pt-4">
       <img className="max-w-[250px] flex-1 h-[210px] object-cover object-center brightness-75"
            src={image !== "https://megalab.pythonanywhere.com/null" ? image : defaultImage} alt="post image"/>
       <div className="relative flex flex-col flex-1 justify-center">
@@ -52,7 +63,7 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
         {canDelete ? <FiTrash2 onClick={handleClick} className="absolute top-0 right-0 cursor-pointer" size="24px"/> :
           <IoHeartOutline onClick={handleClick} className="absolute top-0 right-0 cursor-pointer" size="24px"/>}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
