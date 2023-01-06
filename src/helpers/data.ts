@@ -21,8 +21,8 @@ export const registerUser = async (name: string, lastName: string, nickname: str
   return response.data;
 }
 
-export const fetchPosts = async () => {
-  const response = await axios.get("https://megalab.pythonanywhere.com/post/", {
+export const fetchPosts = async (search: string = "", tag: string = "",) => {
+  const response = await axios.get(`https://megalab.pythonanywhere.com/post/?search=${search}&tag=${tag}`, {
     headers: {
       Authorization: `Token ${localStorage.getItem("token")}`
     }
