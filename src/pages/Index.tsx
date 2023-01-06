@@ -20,8 +20,8 @@ const Index = () => {
   })
 
   return (
-    <div className="max-w-screen-xl mx-auto pt-8 w-full flex flex-1 gap-36">
-      <div className="max-w-xs w-72 flex-1">
+    <div className="max-w-screen-xl mx-auto pt-8 w-full flex flex-1 justify-between gap-12">
+      <div>
         {tagsQuery.isLoading ? <Spinner/> :
           <Filters setTag={setSelectedTag} tags={tagsQuery.data}/>}
       </div>
