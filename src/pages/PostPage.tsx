@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {IoArrowBackSharp, IoShareSocialOutline} from "react-icons/io5";
-import {Link, useParams} from "react-router-dom";
+import {useParams, useNavigate} from "react-router-dom";
 import {useMutation} from "react-query";
 import {submitComment} from "../helpers/data";
 import defaultImage from "../assets/defaultImage.png"
@@ -11,6 +11,8 @@ import {usePostData} from "../helpers/usePostData";
 const PostPage: React.FC = () => {
 
   const {postId} = useParams();
+
+  const navigate = useNavigate();
 
   const [commentText, setCommentText] = useState<string>("");
 
@@ -32,7 +34,7 @@ const PostPage: React.FC = () => {
       <div className="max-w-[845px]">
         {postQuery.isSuccess &&
           <>
-            <Link to={"/"}><IoArrowBackSharp size="30"/></Link>
+            <button onClick={() => navigate(-1)}><IoArrowBackSharp size="30"/></button>
             <p className="pt-6 text-2xl font-medium">{postQuery.data.title}</p>
             <p
               className="pt-4 text-slate-500">{postQuery.data.text.length > 200 ? postQuery.data.text.slice(0, 200) : postQuery.data.text}</p>
