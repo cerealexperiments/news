@@ -16,7 +16,7 @@ const Index = () => {
 
   const postsQuery = useQuery({
     queryKey: [selectedTag, searchValue],
-    queryFn: () => fetchPosts(searchValue ? searchValue : "", selectedTag)
+    queryFn: () => fetchPosts(searchValue ? searchValue : "", encodeURIComponent(selectedTag))
   });
 
   const tagsQuery = useQuery({
