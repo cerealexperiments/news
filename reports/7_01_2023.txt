@@ -1,0 +1,5 @@
+yesterday:
+  - implement filtering
+today:
+  - improve styling
+  - implement searching
