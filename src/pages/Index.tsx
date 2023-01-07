@@ -4,14 +4,19 @@ import PostsList from "../components/PostsList";
 import {useQuery} from "react-query";
 import {fetchPosts, fetchTags} from "../helpers/data";
 import Spinner from "../components/Spinner";
+import {useSearchParams} from "react-router-dom";
 
 const Index = () => {
 
   const [selectedTag, setSelectedTag] = useState("");
+  const [searchParams] = useSearchParams();
+  const searchValue = (Object.fromEntries([...searchParams])).search
+  console.log(`search value: ${searchValue}`);
+  console.log(encodeURIComponent(selectedTag))
 
   const postsQuery = useQuery({
-    queryKey: [selectedTag],
-    queryFn: () => fetchPosts("", selectedTag)
+    queryKey: [selectedTag, searchValue],
+    queryFn: () => fetchPosts(searchValue ? searchValue : "", selectedTag)
   });
 
   const tagsQuery = useQuery({

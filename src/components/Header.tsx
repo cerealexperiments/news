@@ -1,8 +1,8 @@
 import {Menu, Transition} from "@headlessui/react";
 import {IoSearch, IoPersonCircleOutline} from "react-icons/io5";
 import logo from "../assets/logo.svg"
-import {Link} from "react-router-dom";
-import {Fragment, useContext} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import React, {Fragment, useContext, useState} from "react";
 import headerImage from "../assets/header.png"
 import AuthContext from "../context/AuthContext";
 
@@ -13,6 +13,14 @@ function classNames(...classes: string[]) {
 const Header = () => {
 
   const {logout} = useContext(AuthContext);
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    navigate(`/?search=${searchValue}`)
+  }
 
   return (
     <div className="bg-gray-500 h-[240px] pt-8 flex bg-no-repeat bg-center bg-cover"
@@ -21,7 +29,20 @@ const Header = () => {
         <div className="flex items-center justify-between">
           <Link to={"/"}><img src={logo} alt=""/></Link>
           <div className="flex align-center gap-6">
-            <IoSearch size="30" fill="white"/>
+            <div className="flex items-center gap-2">
+              <form onSubmit={handleSubmit} className="h-full">
+                <input onChange={(event) => {
+                  setSearchValue(event.target.value)
+                }} value={searchValue} type="text"
+                       disabled={!isOpen}
+                       id="default-search"
+                       className={`${isOpen ? "opacity-100" : "opacity-0"} block self-stretch h-full px-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none transition-all duration-500`}
+                       placeholder="Найти пост..."/>
+              </form>
+              <IoSearch className="self-stretch max-w-max w-full" onClick={() => setIsOpen(prevState => !prevState)}
+                        size="30px"
+                        fill="white"/>
+            </div>
             <Menu as="div" className="relative text-left self-center">
               <Menu.Button className="flex">
                 <IoPersonCircleOutline size="30" fill="white"/>
