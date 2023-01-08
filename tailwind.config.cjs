@@ -6,10 +6,12 @@ module.exports = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "header": "url(./src/assets/header.png)"
+      boxShadow: {
+        "modal": "0px 4px 24px rgba(0, 0, 0, 0.14)"
       }
     }
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }

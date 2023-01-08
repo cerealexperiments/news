@@ -66,19 +66,19 @@ const Profile = () => {
             <img className="bg-neutral-200 rounded-full w-72 h-72 object-cover"
                  src={userData.data["profile_image"] === null ? defaultImage : `https://megalab.pythonanywhere.com/${userData.data["profile_image"]}`}
                  alt="profile image"/>
-            <div className="flex gap-6 items-baseline justify-center">
-              <div className="flex items-center gap-3 pt-4">
+            <div className="flex gap-6 items-baseline items-center pt-4 justify-center">
+              <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-colors p-1.5">
                 <input type="file"
                        onChange={handleFileChange}
                        id="profileImage"
                        className="hidden file:py-1 file:px-4 file:border file:border-gray-300 file:text-sm file:rounded file:bg-white file:border-solid w-1/2"/>
-                <label htmlFor="profileImage">Добавить фото</label>
+                <label className="cursor-pointer" htmlFor="profileImage">Добавить фото</label>
                 <FiDownload size="18"/>
               </div>
               <button onClick={() => {
                 setImage(null);
               }
-              } className="flex items-center gap-3 pt-4">
+              } className="flex items-center gap-3 cursor-pointer hover:bg-slate-100 transition-colors p-1.5">
                 Удалить
                 <FiTrash2 size="18"/>
               </button>
@@ -106,7 +106,7 @@ const Profile = () => {
               </div>
             </div>
             <button onClick={handleSubmit}
-                    className="bg-violet-700 py-2 px-8 rounded-xl text-white font-medium self-end">Сохранить
+                    className="bg-violet-600 hover:bg-violet-700 transition-colors py-2 px-8 rounded-xl text-white font-medium self-end">Сохранить
             </button>
             {profileMutation.isLoading && <p>editing your profile...</p>}
             {profileMutation.isError && <p>error occurred!</p>}
@@ -116,7 +116,8 @@ const Profile = () => {
 
         <div className="flex justify-between pt-24">
           <h2 className="pb-12 font-medium text-4xl">Мои публикации</h2>
-          <button onClick={openModal} className="py-1 px-6 rounded-xl bg-violet-700 text-white self-baseline">Новая
+          <button onClick={openModal}
+                  className="py-1.5 px-6 rounded-xl bg-violet-600 hover:bg-violet-700 transition-colors text-white font-medium self-baseline">Новая
             публикация
           </button>
           <NewPostModal isOpen={isOpen} closeModal={closeModal}/>

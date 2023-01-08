@@ -47,10 +47,10 @@ const Auth = () => {
           </div>
         </div>
         <button onClick={handleSubmit}
-                className="py-1.5 px-16 rounded-xl bg-violet-700 text-white w-fit self-center">Войти
+                className="py-1.5 px-16 rounded-xl bg-violet-600 hover:bg-violet-700 transition-colors font-medium text-white w-fit self-center">Войти
         </button>
         <>
-          {authMutation.isError && <p>Error occured!</p>}
+          {authMutation.isError && <p>Error occurred!</p>}
           {authMutation.isSuccess && <p>User logged in successfully!</p>}
           {authMutation.isSuccess && <p>{authMutation.data.token}</p>}
           {authMutation.isSuccess && <Navigate to="/"/>

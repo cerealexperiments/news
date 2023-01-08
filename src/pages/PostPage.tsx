@@ -56,7 +56,7 @@ const PostPage: React.FC = () => {
                 className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full" type="text"
                 placeholder="Напишите комментарий..."/>
               <button onClick={() => commentMutation.mutate()}
-                      className="bg-violet-700 py-2 px-8 rounded-xl text-white font-medium">Ответить
+                      className="bg-violet-600 hover:bg-violet-700 transition-colors py-2 px-8 rounded-xl text-white font-medium">Ответить
               </button>
               {commentMutation.isLoading && <p>submitting your comment...</p>}
               {commentMutation.isSuccess && <p>comment submitted!</p>}

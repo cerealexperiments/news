@@ -7,8 +7,8 @@ const Footer = () => {
     <div className="h-[192px] bg-zinc-900 flex flex-col items-center pt-8 mt-auto">
       <img className="pb-10" src={logo} alt=""/>
       <div className="flex gap-8">
-        <Link to="/profile" className="text-white text-lg">Мой профиль</Link>
-        <Link to="/favorites" className="text-white text-lg">Избранные новости</Link>
+        <Link to="/profile" className="text-white text-lg hover:text-slate-300 transition-colors">Мой профиль</Link>
+        <Link to="/favorites" className="text-white text-lg hover:text-slate-300 transition-colors">Избранные новости</Link>
       </div>
     </div>
   );

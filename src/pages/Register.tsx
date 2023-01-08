@@ -5,7 +5,7 @@ import {useMutation} from "react-query";
 import {registerUser} from "../helpers/data";
 
 const Register = () => {
-  
+
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [nickname, setNickname] = useState("");
@@ -55,7 +55,7 @@ const Register = () => {
           </div>
         </div>
         <button onClick={handleSubmit}
-                className="py-1.5 px-8 rounded-xl bg-violet-700 text-white w-fit self-center">Регистрация
+                className="py-1.5 px-8 rounded-xl bg-violet-600 hover:bg-violet-700 transition-colors text-white w-fit self-center">Регистрация
         </button>
         <>
           {registerMutation.isLoading && <p>Registering user...</p>}
@@ -63,7 +63,7 @@ const Register = () => {
           {registerMutation.isSuccess && <p>User registered successfully!</p>}
         </>
         <p className="text-sm text-slate-600 text-center pt-4">Уже есть логин?
-          <Link to="/auth" className="underline text-blue-800"> Войти</Link>
+          <Link to="/auth" className="pl-1 font-medium text-violet-600 hover:underline"> Войти</Link>
         </p>
       </div>
     </div>

@@ -60,13 +60,13 @@ const CommentItem: React.FC<CommentItemProps> = ({id, user, text, child, postId}
           replyMutation.mutate()
           console.log(postId, id, text)
         }}
-                className="bg-violet-700 py-1 px-8 rounded-xl text-white font-medium">Ответить
+                className="bg-violet-600 hover:bg-violet-700 transition-colors py-1 px-8 rounded-xl text-white font-medium">Ответить
         </button>
         {replyMutation.isLoading && <p>replying...</p>}
         {replyMutation.isSuccess && <p>reply submitted!</p>}
       </div>)}
       <div className="pt-1.5 flex gap-8">
-        <button onClick={() => setIsReplying((prev) => !prev)} className="underline text-violet-600">Ответить</button>
+        <button onClick={() => setIsReplying((prev) => !prev)} className="text-violet-600 font-medium hover:underline hover:text-violet-700 transition-colors">Ответить</button>
       </div>
       {child?.map((reply: CommentReply) => <CommentReplyItem key={reply.id} id={reply.id} user={reply.user}
                                                              text={reply.text}/>)}

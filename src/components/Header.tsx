@@ -27,7 +27,9 @@ const Header = () => {
          style={{backgroundImage: `url(${headerImage})`}}>
       <div className="max-w-screen-xl mx-auto w-full flex flex-col">
         <div className="flex items-center justify-between">
-          <Link to={"/"}><img src={logo} alt=""/></Link>
+          <Link to={"/"}>
+            <img src={logo} alt=""/>
+          </Link>
           <div className="flex align-center gap-6">
             <div className="flex items-center gap-2">
               <form onSubmit={handleSubmit} className="h-full">
@@ -36,20 +38,21 @@ const Header = () => {
                 }} value={searchValue} type="text"
                        disabled={!isOpen}
                        id="default-search"
-                       className={`${isOpen ? "opacity-100" : "opacity-0"} block self-stretch h-full px-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none transition-all duration-500`}
+                       className={`${isOpen ? "opacity-100" : "opacity-0"} block self-stretch h-full px-4 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:outline-none transition-all duration-300`}
                        placeholder="Найти пост..."/>
               </form>
-              <IoSearch className="self-stretch max-w-max w-full" onClick={() => setIsOpen(prevState => !prevState)}
+              <IoSearch className="self-stretch max-w-max w-full cursor-pointer hover:fill-slate-300 transition-colors"
+                        onClick={() => setIsOpen(prevState => !prevState)}
                         size="30px"
                         fill="white"/>
             </div>
             <Menu as="div" className="relative text-left self-center">
               <Menu.Button className="flex">
-                <IoPersonCircleOutline size="30" fill="white"/>
+                <IoPersonCircleOutline className="hover:fill-slate-300 transition-colors" size="30" fill="white"/>
               </Menu.Button>
               <Transition
                 as={Fragment}
-                enter="transition ease-out duration-150"
+                enter="transition ease-out duration-300"
                 enterFrom="transform opacity-0 scale-95"
                 enterTo="transform opacity-100 scale-100"
                 leave="transition ease-in duration-75"
@@ -91,14 +94,14 @@ const Header = () => {
             </Menu>
             <Menu as="div" className="relative text-left self-center">
               <div>
-                <Menu.Button className="flex flex-col justify-center gap-1.5">
-                  <div className="w-6 h-0.5 bg-white"></div>
-                  <div className="w-6 h-0.5 bg-white"></div>
-                  <div className="w-6 h-0.5 bg-white"></div>
+                <Menu.Button className="flex flex-col justify-center gap-1.5 group">
+                  <div className="w-6 h-0.5 bg-white group-hover:bg-slate-300 transition-colors"></div>
+                  <div className="w-6 h-0.5 bg-white group-hover:bg-slate-300 transition-colors"></div>
+                  <div className="w-6 h-0.5 bg-white group-hover:bg-slate-300 transition-colors"></div>
                 </Menu.Button>
                 <Transition
                   as={Fragment}
-                  enter="transition ease-out duration-150"
+                  enter="transition ease-out duration-300"
                   enterFrom="transform opacity-0 scale-95"
                   enterTo="transform opacity-100 scale-100"
                   leave="transition ease-in duration-75"
