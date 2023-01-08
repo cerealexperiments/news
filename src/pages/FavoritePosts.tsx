@@ -1,16 +1,12 @@
 import React from 'react';
 import PostsList from "../components/PostsList";
-import {useQuery} from "react-query";
-import {fetchFavoritePosts} from "../helpers/data";
+import {useFavoritePosts} from "../helpers/useFavoritePosts";
 import Spinner from "../components/Spinner";
 
 
 const FavoritePosts = () => {
 
-  const query = useQuery({
-    queryKey: "favoritePosts",
-    queryFn: fetchFavoritePosts
-  })
+  const query = useFavoritePosts();
 
   return (
     <div className="max-w-screen-xl w-full mx-auto pt-8 flex-1 flex flex-col">

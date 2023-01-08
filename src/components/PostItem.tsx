@@ -5,9 +5,10 @@ import {Post} from "../types";
 import {Link} from "react-router-dom";
 import defaultImage from "../assets/defaultImage.png";
 import {useMutation} from "react-query";
-import {likePost, removePost} from "../helpers/data";
+import {likePost, removePost, unlikePost} from "../helpers/data";
 import {useUserPosts} from "../helpers/useUserPosts";
 import {motion} from "framer-motion";
+import {useFavoritePosts} from "../helpers/useFavoritePosts";
 
 type PostItemProps = Post & {
   canDelete: boolean
@@ -15,8 +16,14 @@ type PostItemProps = Post & {
 
 const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, is_liked}) => {
 
+  const favoritePosts = useFavoritePosts();
+
   const likeMutation = useMutation({
     mutationFn: () => likePost(id)
+  })
+
+  const unlikeMutation = useMutation({
+    mutationFn: () => unlikePost(id)
   })
 
   const deleteMutation = useMutation({
@@ -24,7 +31,13 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
   })
 
   const handleClick = () => {
-    canDelete ? deleteMutation.mutate() : likeMutation.mutate();
+    if(canDelete) {
+      deleteMutation.mutate();
+    } else if(is_liked) {
+      unlikeMutation.mutate();
+    } else {
+      likeMutation.mutate();
+    }
   }
 
   const postsQuery = useUserPosts();
@@ -34,6 +47,12 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
       postsQuery.refetch().then(() => console.log("refetched"));
     }
   }, [deleteMutation.status])
+
+  useEffect(() => {
+    if(unlikeMutation.isSuccess) {
+      favoritePosts.refetch().then(() => console.log("refetched favorite posts"))
+    }
+  }, [unlikeMutation.status])
 
   return (
     <motion.div key={id}
@@ -62,8 +81,10 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
         {deleteMutation.isSuccess && <p>Post deleted!</p>}
         {likeMutation.isLoading && <p>Liking this post...</p>}
         {likeMutation.isSuccess && <p>Post liked!</p>}
+        {unlikeMutation.isLoading && <p>unliking this post...</p>}
+        {unlikeMutation.isSuccess && <p>Post unliked!</p>}
         {canDelete ? <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
-          <FiHeart onClick={handleClick} className={`${is_liked && "fill-red-600 text-red-600"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>}
+          <FiHeart onClick={handleClick} className={`${is_liked && "fill-red-600 text-red-600 hover:fill-white hover:text-black"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>}
       </div>
     </motion.div>
   );
