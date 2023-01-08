@@ -11,7 +11,7 @@ export type Post = {
   title: string;
   text: string;
   image: string;
-  isLiked: boolean;
+  "is_liked": boolean;
   comment?: Comment[];
 }
 

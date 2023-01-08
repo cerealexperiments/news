@@ -13,7 +13,7 @@ type PostItemProps = Post & {
   canDelete: boolean
 }
 
-const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) => {
+const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, is_liked}) => {
 
   const likeMutation = useMutation({
     mutationFn: () => likePost(id)
@@ -63,7 +63,7 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
         {likeMutation.isLoading && <p>Liking this post...</p>}
         {likeMutation.isSuccess && <p>Post liked!</p>}
         {canDelete ? <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
-          <FiHeart onClick={handleClick} className="absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors" size="24px"/>}
+          <FiHeart onClick={handleClick} className={`${is_liked && "fill-red-600 text-red-600"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>}
       </div>
     </motion.div>
   );
