@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Tag} from "../types";
+import {motion} from "framer-motion";
 
 type FiltersProps = {
   tags: Tag[];
@@ -10,7 +11,7 @@ const Filters: React.FC<FiltersProps> = ({tags, setTag}) => {
   const [selected, setSelected] = useState("");
 
   return (
-    <div className="">
+    <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}}>
       <p className="font-medium text-lg pb-4">Фильтрация</p>
       <ul
         className="flex flex-col gap-2 pb-4 max-h-64 w-full overflow-scroll scrollbar scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
@@ -34,7 +35,7 @@ const Filters: React.FC<FiltersProps> = ({tags, setTag}) => {
                 className="bg-violet-600 hover:bg-violet-700 transition-colors py-1.5 px-4 rounded-xl text-white font-medium">Сбросить
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

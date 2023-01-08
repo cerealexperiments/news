@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {IoShareSocialOutline, IoHeartOutline} from "react-icons/io5";
-import {FiTrash2} from "react-icons/fi";
+import {IoShareSocialOutline} from "react-icons/io5";
+import {FiTrash2, FiHeart} from "react-icons/fi";
 import {Post} from "../types";
 import {Link} from "react-router-dom";
 import defaultImage from "../assets/defaultImage.png";
@@ -44,7 +44,7 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
                   opacity: 1,
                 }}
                 transition={{
-                  duration: 0.2
+                  duration: 0.15
                 }}
                 className="flex gap-6 [&:not(:first-child)]:pt-4">
       <img className="max-w-[250px] flex-1 self-start aspect-[10/7] object-cover object-center brightness-75"
@@ -62,8 +62,8 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete}) 
         {deleteMutation.isSuccess && <p>Post deleted!</p>}
         {likeMutation.isLoading && <p>Liking this post...</p>}
         {likeMutation.isSuccess && <p>Post liked!</p>}
-        {canDelete ? <FiTrash2 onClick={handleClick} className="absolute top-0 right-0 cursor-pointer" size="24px"/> :
-          <IoHeartOutline onClick={handleClick} className="absolute top-0 right-0 cursor-pointer" size="24px"/>}
+        {canDelete ? <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
+          <FiHeart onClick={handleClick} className="absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors" size="24px"/>}
       </div>
     </motion.div>
   );

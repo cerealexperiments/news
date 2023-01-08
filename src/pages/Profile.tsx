@@ -8,6 +8,7 @@ import {editUserData} from "../helpers/data";
 import Spinner from "../components/Spinner";
 import {useUserPosts} from "../helpers/useUserPosts";
 import {useUserData} from "../helpers/useUserData";
+import {motion} from "framer-motion";
 
 const Profile = () => {
 
@@ -61,7 +62,7 @@ const Profile = () => {
     <div className="pt-12 max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
       {userData.isLoading && <Spinner/>}
       {userData.isSuccess && <>
-        <div className="flex items-center justify-start gap-32">
+        <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="flex items-center justify-start gap-32">
           <div className="flex flex-col">
             <img className="bg-neutral-200 rounded-full w-72 h-72 object-cover"
                  src={userData.data["profile_image"] === null ? defaultImage : `https://megalab.pythonanywhere.com/${userData.data["profile_image"]}`}
@@ -112,7 +113,7 @@ const Profile = () => {
             {profileMutation.isError && <p>error occurred!</p>}
             {profileMutation.isSuccess && <p>profile edited successfully!</p>}
           </div>
-        </div>
+        </motion.div>
 
         <div className="flex justify-between pt-24">
           <h2 className="pb-12 font-medium text-4xl">Мои публикации</h2>

@@ -7,6 +7,7 @@ import defaultImage from "../assets/defaultImage.png"
 import Spinner from "../components/Spinner";
 import CommentsList from "../components/CommentsList";
 import {usePostData} from "../helpers/usePostData";
+import {motion} from "framer-motion";
 
 const PostPage: React.FC = () => {
 
@@ -27,13 +28,11 @@ const PostPage: React.FC = () => {
       console.log("refetch");
     });
   }, [commentMutation?.data])
-
   return (
     <div className="max-w-screen-xl flex-1 mx-auto flex pt-8 w-full">
       {postQuery.isLoading && <Spinner/>}
-      <div className="max-w-[845px]">
         {postQuery.isSuccess &&
-          <>
+          <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="max-w-[845px]">
             <button onClick={() => navigate(-1)}><IoArrowBackSharp size="30"/></button>
             <p className="pt-6 text-2xl font-medium">{postQuery.data.title}</p>
             <p
@@ -61,9 +60,8 @@ const PostPage: React.FC = () => {
               {commentMutation.isLoading && <p>submitting your comment...</p>}
               {commentMutation.isSuccess && <p>comment submitted!</p>}
             </div>
-          </>
+          </motion.div>
         }
-      </div>
     </div>
   );
 };
