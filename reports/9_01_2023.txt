@@ -1,0 +1,5 @@
+yesterday:
+  - implement searching
+  - implement like removal
+today:
+  - improve styling
