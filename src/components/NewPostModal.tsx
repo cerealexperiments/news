@@ -4,6 +4,7 @@ import {useMutation, useQuery} from "react-query";
 import {Tag} from "../types";
 import {fetchTags, submitPost} from "../helpers/data";
 import {useUserPosts} from "../helpers/useUserPosts";
+import Spinner from "./Spinner";
 
 type NewPostModalProps = {
   isOpen: boolean,
@@ -126,13 +127,7 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                           className="py-1 px-12 bg-violet-700 rounded-xl text-white font-medium">Создать
                   </button>
                 </div>
-                {newPostMutation.isLoading && <p>submitting your post...</p>}
-                {newPostMutation.isSuccess && (
-                  <>
-                    <p>post submitted successfully!</p>
-                  </>
-                )}
-
+                {newPostMutation.isLoading && <div className="flex justify-center items-center flex-1 w-full pt-4"><Spinner/></div>}
               </Dialog.Panel>
             </Transition.Child>
           </div>

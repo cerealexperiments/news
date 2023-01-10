@@ -22,8 +22,9 @@ const Filters: React.FC<FiltersProps> = ({tags, setTag}) => {
               console.log(event.target.value);
             }} type="radio"
                    name="tag"
-                   className="w-4 cursor-pointer"/>
-            <label>{tag.name}</label>
+                   className="w-4 cursor-pointer"
+            id={tag.name}/>
+            <label htmlFor={tag.name}>{tag.name}</label>
           </li>
         })}
       </ul>

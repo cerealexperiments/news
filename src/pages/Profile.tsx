@@ -60,7 +60,7 @@ const Profile = () => {
 
   return (
     <div className="pt-12 max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
-      {userData.isLoading && <Spinner/>}
+      {userData.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
       {userData.isSuccess && <>
         <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="flex items-center justify-start gap-32">
           <div className="flex flex-col">
@@ -106,12 +106,9 @@ const Profile = () => {
                        type="text"/>
               </div>
             </div>
-            <button onClick={handleSubmit}
-                    className="bg-violet-600 hover:bg-violet-700 transition-colors py-2 px-8 rounded-xl text-white font-medium self-end">Сохранить
-            </button>
-            {profileMutation.isLoading && <p>editing your profile...</p>}
-            {profileMutation.isError && <p>error occurred!</p>}
-            {profileMutation.isSuccess && <p>profile edited successfully!</p>}
+            {profileMutation.isLoading ? <div className="self-end py-1.5 pr-16"><Spinner/></div> : <button onClick={handleSubmit}
+                                                 className="bg-violet-600 hover:bg-violet-700 transition-colors py-2 px-8 rounded-xl text-white font-medium self-end">Сохранить
+            </button>}
           </div>
         </motion.div>
 
@@ -123,7 +120,7 @@ const Profile = () => {
           </button>
           <NewPostModal isOpen={isOpen} closeModal={closeModal}/>
         </div>
-        {postsQuery.isLoading && <Spinner/>}
+        {postsQuery.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
         {postsQuery.isSuccess && <PostsList canDelete={true} posts={postsQuery.data}/>}
       </>}
     </div>

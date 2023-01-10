@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {IoShareSocialOutline} from "react-icons/io5";
 import {FiTrash2, FiHeart} from "react-icons/fi";
 import {Post} from "../types";
@@ -9,6 +9,7 @@ import {likePost, removePost, unlikePost} from "../helpers/data";
 import {useUserPosts} from "../helpers/useUserPosts";
 import {motion} from "framer-motion";
 import {useFavoritePosts} from "../helpers/useFavoritePosts";
+import Spinner from "./Spinner";
 
 type PostItemProps = Post & {
   canDelete: boolean
@@ -30,10 +31,12 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
     mutationFn: () => removePost(id)
   })
 
+  const [isLiked, setIsLiked] = useState(is_liked);
+
   const handleClick = () => {
     if(canDelete) {
       deleteMutation.mutate();
-    } else if(is_liked) {
+    } else if(isLiked) {
       unlikeMutation.mutate();
     } else {
       likeMutation.mutate();
@@ -51,8 +54,15 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
   useEffect(() => {
     if(unlikeMutation.isSuccess) {
       favoritePosts.refetch().then(() => console.log("refetched favorite posts"))
+      setIsLiked(false);
     }
   }, [unlikeMutation.status])
+
+  useEffect(() => {
+    if(likeMutation.isSuccess) {
+      setIsLiked(true);
+    }
+  }, [likeMutation.status])
 
   return (
     <motion.div key={id}
@@ -76,15 +86,10 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
         <Link to={`/post/${id}`}>
           <p className="text-violet-600 hover:underline hover:text-violet-700 font-medium transition-colors pt-1 pb-4">Читать дальше...</p>
         </Link>
-        <IoShareSocialOutline size="24px" color="#64748b"/>
-        {deleteMutation.isLoading && <p>Deleting this post...</p>}
-        {deleteMutation.isSuccess && <p>Post deleted!</p>}
-        {likeMutation.isLoading && <p>Liking this post...</p>}
-        {likeMutation.isSuccess && <p>Post liked!</p>}
-        {unlikeMutation.isLoading && <p>unliking this post...</p>}
-        {unlikeMutation.isSuccess && <p>Post unliked!</p>}
-        {canDelete ? <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
-          <FiHeart onClick={handleClick} className={`${is_liked && "fill-red-600 text-red-600 hover:fill-white hover:text-black"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>}
+        {<IoShareSocialOutline size="24px" color="#64748b"/>}
+        {canDelete ? deleteMutation.isLoading ? <div className="absolute top-0 right-0"><Spinner/></div> : <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
+          likeMutation.isLoading ? <div className="absolute top-0 right-0"><Spinner/></div> : <FiHeart onClick={handleClick} className={`${isLiked && "fill-red-600 text-red-600 hover:fill-white hover:text-black"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>
+        }
       </div>
     </motion.div>
   );
