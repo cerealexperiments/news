@@ -1,5 +1,5 @@
 import React from 'react';
-import PostsList from "../components/PostsList";
+import PostsList from "../components/Layout/PostsList";
 import {useFavoritePosts} from "../helpers/useFavoritePosts";
 import Spinner from "../components/Spinner";
 

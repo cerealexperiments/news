@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Comment, CommentReply} from "../types";
-import defaultProfile from "../assets/defaultProfile.png";
+import {Comment, CommentReply} from "../../types";
+import defaultProfile from "../../assets/defaultProfile.png";
 import CommentReplyItem from "./CommentReplyItem";
-import {replyToComment} from "../helpers/data";
+import {replyToComment} from "../../helpers/data";
 import {useMutation} from "react-query";
-import {usePostData} from "../helpers/usePostData";
+import {usePostData} from "../../helpers/usePostData";
 import {motion} from "framer-motion";
-import Spinner from "./Spinner";
+import Spinner from "../Spinner";
 
 type CommentItemProps = Comment & {
   postId: number

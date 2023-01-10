@@ -7,7 +7,6 @@ export const fetchFavoritePosts = async () => {
       Authorization: `Token ${localStorage.getItem("token")}`
     }
   })
-  console.log(response.data);
   return response.data;
 }
 

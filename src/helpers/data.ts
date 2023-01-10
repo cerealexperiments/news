@@ -5,7 +5,6 @@ export const authenticateUser = async (nickname: string, password: string) => {
     nickname: nickname,
     password: password,
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -17,7 +16,6 @@ export const registerUser = async (name: string, lastName: string, nickname: str
     password: password,
     ["password2"]: confirmPassword
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -27,7 +25,6 @@ export const fetchPosts = async (search: string = "", tag: string = "",) => {
       Authorization: `Token ${localStorage.getItem("token")}`
     }
   })
-  console.log(response.data)
   return response.data;
 }
 
@@ -37,7 +34,6 @@ export const fetchFavoritePosts = async () => {
       Authorization: `Token ${localStorage.getItem("token")}`
     }
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -47,7 +43,6 @@ export const fetchTags = async () => {
       Authorization: `Token ${localStorage.getItem("token")}`
     }
   })
-  console.log(response.data)
   return response.data;
 }
 
@@ -63,7 +58,6 @@ export const submitPost = async (title: string, text: string, image: File | unde
       ["Content-Type"]: "multipart/form-data"
     },
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -73,7 +67,6 @@ export const removePost = async (postId: number) => {
       Authorization: `Token ${localStorage.getItem("token")}`,
     }
   })
-  console.log(response);
   return response.data;
 }
 
@@ -85,7 +78,6 @@ export const likePost = async (postId: number) => {
       Authorization: `Token ${localStorage.getItem("token")}`,
     }
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -97,7 +89,6 @@ export const unlikePost = async (postId: number) => {
       Authorization: `Token ${localStorage.getItem("token")}`,
     }
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -110,7 +101,6 @@ export const submitComment = async (postId: number, text: string) => {
       Authorization: `Token ${localStorage.getItem("token")}`,
     }
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -124,7 +114,6 @@ export const replyToComment = async (postId: number, text: string, parentComment
       Authorization: `Token ${localStorage.getItem("token")}`,
     }
   })
-  console.log(response.data);
   return response.data;
 }
 
@@ -141,7 +130,6 @@ export const editUserData = async (nickname: string, name: string, lastName: str
       ["Content-Type"]: "multipart/form-data"
     }
   })
-  console.log(response.data);
   return response.data;
 }
 

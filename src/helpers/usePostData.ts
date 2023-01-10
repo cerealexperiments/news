@@ -7,7 +7,6 @@ export const fetchPostData = async (postId: number | undefined) => {
       Authorization: `Token ${localStorage.getItem("token")}`
     }
   })
-  console.log(data.data);
   return data.data;
 }
 

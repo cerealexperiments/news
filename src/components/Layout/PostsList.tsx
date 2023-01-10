@@ -1,6 +1,6 @@
 import React from 'react';
-import PostItem from "./PostItem";
-import {Post} from "../types";
+import PostItem from "../PostItem";
+import {Post} from "../../types";
 
 type PostsListProps = {
   posts: Post[];

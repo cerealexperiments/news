@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import defaultImage from "../assets/defaultProfile.png"
 import {FiDownload, FiTrash2} from "react-icons/fi";
-import PostsList from "../components/PostsList";
+import PostsList from "../components/Layout/PostsList";
 import {useMutation} from "react-query";
 import NewPostModal from "../components/NewPostModal";
 import {editUserData} from "../helpers/data";
@@ -50,11 +50,10 @@ const Profile = () => {
   }, [userData?.isSuccess])
 
   useEffect(() => {
-    userData.refetch().then(() => console.log("refetched"));
+    userData.refetch();
   }, [profileMutation.isSuccess])
 
   const handleSubmit = async () => {
-    console.log(name, nickname, lastName, image)
     profileMutation.mutate();
   }
 

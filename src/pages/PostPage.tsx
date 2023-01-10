@@ -5,7 +5,7 @@ import {useMutation} from "react-query";
 import {submitComment} from "../helpers/data";
 import defaultImage from "../assets/defaultImage.png"
 import Spinner from "../components/Spinner";
-import CommentsList from "../components/CommentsList";
+import CommentsList from "../components/Layout/CommentsList";
 import {usePostData} from "../helpers/usePostData";
 import {motion} from "framer-motion";
 

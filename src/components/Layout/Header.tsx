@@ -1,10 +1,10 @@
 import {Menu, Transition} from "@headlessui/react";
 import {IoSearch, IoPersonCircleOutline} from "react-icons/io5";
-import logo from "../assets/logo.svg"
+import logo from "../../assets/logo.svg"
 import {Link, useNavigate} from "react-router-dom";
 import React, {Fragment, useContext, useState} from "react";
-import headerImage from "../assets/header.png"
-import AuthContext from "../context/AuthContext";
+import headerImage from "../../assets/header.png"
+import AuthContext from "../../context/AuthContext";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')

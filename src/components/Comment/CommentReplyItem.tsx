@@ -1,6 +1,6 @@
 import React from 'react';
-import {CommentReply} from "../types";
-import defaultProfile from "../assets/defaultProfile.png";
+import {CommentReply} from "../../types";
+import defaultProfile from "../../assets/defaultProfile.png";
 import {motion} from "framer-motion";
 
 const CommentReplyItem: React.FC<CommentReply> = ({id, user, text}) => {

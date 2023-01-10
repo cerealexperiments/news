@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import Filters from "../components/Filters";
-import PostsList from "../components/PostsList";
+import PostsList from "../components/Layout/PostsList";
 import {useQuery} from "react-query";
 import {fetchPosts, fetchTags} from "../helpers/data";
 import Spinner from "../components/Spinner";
@@ -11,8 +11,6 @@ const Index = () => {
   const [selectedTag, setSelectedTag] = useState("");
   const [searchParams] = useSearchParams();
   const searchValue = (Object.fromEntries([...searchParams])).search
-  console.log(`search value: ${searchValue}`);
-  console.log(encodeURIComponent(selectedTag))
 
   const postsQuery = useQuery({
     queryKey: [selectedTag, searchValue],

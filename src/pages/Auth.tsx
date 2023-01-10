@@ -17,7 +17,6 @@ const Auth = () => {
 
   useEffect(() => {
     if (authMutation.isSuccess) {
-      console.log("authenticated!");
       localStorage.setItem("token", authMutation.data.token);
       login();
     }

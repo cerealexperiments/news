@@ -1,7 +1,7 @@
 import React from 'react';
 import {Routes, Route} from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import Header from "../components/Layout/Header";
+import Footer from "../components/Layout/Footer";
 import Index from "./Index";
 import FavoritePosts from "./FavoritePosts";
 import NotFound from "./NotFound";
