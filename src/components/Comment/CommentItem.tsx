@@ -7,6 +7,7 @@ import {useMutation} from "react-query";
 import {usePostData} from "../../helpers/usePostData";
 import {motion} from "framer-motion";
 import Spinner from "../Spinner";
+import Button from "../Button";
 
 type CommentItemProps = Comment & {
   postId: number
@@ -62,12 +63,7 @@ const CommentItem: React.FC<CommentItemProps> = ({id, user, text, child, postId}
           onChange={(event) => setReplyText(event.target.value)}
           className="border-gray-300 rounded-xl border-2 px-4 py-1 max-w-md w-full" type="text"
           placeholder="Напишите комментарий..."/>
-        {replyMutation.isLoading ? <Spinner/> : <button onClick={() => {
-          replyMutation.mutate()
-          console.log(postId, id, text)
-        }}
-                 className="bg-violet-600 hover:bg-violet-700 transition-colors py-1 px-8 rounded-xl text-white font-medium">Ответить
-        </button>}
+        {replyMutation.isLoading ? <Spinner/> : <Button onClick={() => replyMutation.mutate()}>Ответить</Button>}
       </motion.div>)}
     </motion.div>
   );

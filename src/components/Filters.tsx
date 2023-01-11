@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Tag} from "../types";
 import {motion} from "framer-motion";
+import Button from "./Button";
 
 type FiltersProps = {
   tags: Tag[];
@@ -29,12 +30,12 @@ const Filters: React.FC<FiltersProps> = ({tags, setTag}) => {
         })}
       </ul>
       <div className="flex gap-4 py-4 justify-center">
-        <button onClick={() => setTag(selected)}
-                className="bg-violet-600 hover:bg-violet-700 transition-colors py-1.5 px-4 rounded-xl text-white font-medium">Применить
-        </button>
-        <button onClick={() => setTag("")}
-                className="bg-violet-600 hover:bg-violet-700 transition-colors py-1.5 px-4 rounded-xl text-white font-medium">Сбросить
-        </button>
+        <Button className="flex-1" onClick={() => setTag(selected)}>
+          Применить
+        </Button>
+        <Button className="flex-1" onClick={() => setTag("")}>
+          Сбросить
+        </Button>
       </div>
     </motion.div>
   );

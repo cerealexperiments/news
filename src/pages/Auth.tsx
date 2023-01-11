@@ -4,6 +4,7 @@ import {useMutation} from "react-query";
 import AuthContext from "../context/AuthContext";
 import {Navigate} from "react-router-dom";
 import {authenticateUser} from "../helpers/data";
+import Button from "../components/Button";
 
 const Auth = () => {
   const [nickname, setNickname] = useState("");
@@ -45,9 +46,7 @@ const Auth = () => {
                    className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
           </div>
         </div>
-        <button onClick={handleSubmit}
-                className="py-1.5 px-16 rounded-xl bg-violet-600 hover:bg-violet-700 transition-colors font-medium text-white w-fit self-center">Войти
-        </button>
+        <Button className="self-center" size="thin" onClick={handleSubmit}>Войти</Button>
         <>
           {authMutation.isError && <p>Error occurred!</p>}
           {authMutation.isSuccess && <p>User logged in successfully!</p>}

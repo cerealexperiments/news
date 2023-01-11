@@ -8,6 +8,7 @@ import Spinner from "../components/Spinner";
 import CommentsList from "../components/Layout/CommentsList";
 import {usePostData} from "../helpers/usePostData";
 import {motion} from "framer-motion";
+import Button from "../components/Button";
 
 const PostPage: React.FC = () => {
 
@@ -54,9 +55,10 @@ const PostPage: React.FC = () => {
                 value={commentText}
                 className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full" type="text"
                 placeholder="Напишите комментарий..."/>
-              {commentMutation.isLoading ? <div className="flex items-center"><Spinner/></div> : <button onClick={() => commentMutation.mutate()}
-                       className="bg-violet-600 hover:bg-violet-700 transition-colors py-2 px-8 rounded-xl text-white font-medium">Ответить
-              </button>}
+              {commentMutation.isLoading
+                ? <div className="flex items-center"><Spinner/></div>
+                : <Button className="self-center" size="large" onClick={() => commentMutation.mutate()}>Ответить</Button>
+              }
             </div>
           </motion.div>
         }

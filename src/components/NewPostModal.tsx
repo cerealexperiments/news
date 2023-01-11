@@ -5,6 +5,7 @@ import {Tag} from "../types";
 import {fetchTags, submitPost} from "../helpers/data";
 import {useUserPosts} from "../helpers/useUserPosts";
 import Spinner from "./Spinner";
+import Button from "./Button";
 
 type NewPostModalProps = {
   isOpen: boolean,
@@ -123,9 +124,7 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                 </div>
 
                 <div className="mt-8 flex justify-center">
-                  <button onClick={handleSubmit}
-                          className="py-1 px-12 bg-violet-700 rounded-xl text-white font-medium">Создать
-                  </button>
+                  <Button size="thin" onClick={handleSubmit}>Создать</Button>
                 </div>
                 {newPostMutation.isLoading && <div className="flex justify-center items-center flex-1 w-full pt-4"><Spinner/></div>}
               </Dialog.Panel>

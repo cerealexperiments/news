@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import logo from "../assets/logo.svg";
 import {useMutation} from "react-query";
 import {registerUser} from "../helpers/data";
+import Button from "../components/Button";
 
 const Register = () => {
 
@@ -54,9 +55,7 @@ const Register = () => {
                    className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
           </div>
         </div>
-        <button onClick={handleSubmit}
-                className="py-1.5 px-8 rounded-xl bg-violet-600 hover:bg-violet-700 transition-colors text-white w-fit self-center">Регистрация
-        </button>
+        <Button className="self-center" size="thin" onClick={handleSubmit}>Регистрация</Button>
         <>
           {registerMutation.isLoading && <p>Registering user...</p>}
           {registerMutation.isError && <p>Error occured!</p>}

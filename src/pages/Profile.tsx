@@ -9,6 +9,7 @@ import Spinner from "../components/Spinner";
 import {useUserPosts} from "../helpers/useUserPosts";
 import {useUserData} from "../helpers/useUserData";
 import {motion} from "framer-motion";
+import Button from "../components/Button";
 
 const Profile = () => {
 
@@ -105,18 +106,18 @@ const Profile = () => {
                        type="text"/>
               </div>
             </div>
-            {profileMutation.isLoading ? <div className="self-end py-1.5 pr-16"><Spinner/></div> : <button onClick={handleSubmit}
-                                                 className="bg-violet-600 hover:bg-violet-700 transition-colors py-2 px-8 rounded-xl text-white font-medium self-end">Сохранить
-            </button>}
+            {profileMutation.isLoading
+              ? <div className="self-start py-1.5 pr-16"><Spinner/></div>
+              : <Button className="self-end" size="large" onClick={handleSubmit}>Сохранить</Button>
+            }
           </div>
         </motion.div>
 
         <div className="flex justify-between pt-24">
           <h2 className="pb-12 font-medium text-4xl">Мои публикации</h2>
-          <button onClick={openModal}
-                  className="py-1.5 px-6 rounded-xl bg-violet-600 hover:bg-violet-700 transition-colors text-white font-medium self-baseline">Новая
-            публикация
-          </button>
+          <Button className="px-6" onClick={openModal}>
+            Новая публикация
+          </Button>
           <NewPostModal isOpen={isOpen} closeModal={closeModal}/>
         </div>
         {postsQuery.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
