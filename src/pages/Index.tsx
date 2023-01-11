@@ -25,10 +25,11 @@ const Index = () => {
   return (
     <div className="max-w-screen-xl mx-auto pt-8 w-full flex flex-1 justify-between gap-12">
       <div>
-        {tagsQuery.isLoading ? <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div> :
-          <Filters setTag={setSelectedTag} tags={tagsQuery.data}/>}
+        {tagsQuery.isLoading
+          ? <Spinner className="flex justify-center items-center flex-1 w-full pb-8"/>
+          : <Filters setTag={setSelectedTag} tags={tagsQuery.data}/>}
       </div>
-      {postsQuery.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
+      {postsQuery.isLoading && <Spinner className="flex justify-center items-center flex-1 w-full pb-8"/>}
       {postsQuery.isSuccess && <>
         <PostsList posts={postsQuery.data}/>
       </>}

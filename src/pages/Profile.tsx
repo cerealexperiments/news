@@ -69,7 +69,7 @@ const Profile = () => {
 
   return (
     <div className="pt-12 max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
-      {userData.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
+      {userData.isLoading && <Spinner className="flex justify-center items-center flex-1 w-full pb-8"/>}
       {userData.isSuccess && <>
         <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="flex items-center justify-start gap-32">
           <div className="flex flex-col">
@@ -116,7 +116,7 @@ const Profile = () => {
               </div>
             </div>
             {profileMutation.isLoading
-              ? <div className="self-end w-[128px] h-[40px] flex justify-center items-center"><Spinner/></div>
+              ? <Spinner className="self-end w-[128px] h-[40px] flex justify-center items-center"/>
               : <Button className="self-end" size="large" onClick={handleSubmit}>Сохранить</Button>
             }
           </div>
@@ -129,7 +129,7 @@ const Profile = () => {
           </Button>
           <NewPostModal isOpen={isOpen} closeModal={closeModal}/>
         </div>
-        {postsQuery.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
+        {postsQuery.isLoading && <Spinner className="flex justify-center items-center flex-1 w-full pb-8 "/>}
         {postsQuery.isSuccess && <PostsList canDelete={true} posts={postsQuery.data}/>}
       </>}
     </div>

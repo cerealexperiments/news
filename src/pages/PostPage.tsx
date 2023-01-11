@@ -31,7 +31,7 @@ const PostPage: React.FC = () => {
   }, [commentMutation?.data])
   return (
     <div className="max-w-screen-xl flex-1 mx-auto flex pt-8 w-full">
-      {postQuery.isLoading && <div className="flex justify-center items-center flex-1 w-full pb-8 "><Spinner/></div>}
+      {postQuery.isLoading && <Spinner className="flex justify-center items-center flex-1 w-full pb-8"/>}
         {postQuery.isSuccess &&
           <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="max-w-[845px]">
             <button onClick={() => navigate(-1)}><IoArrowBackSharp size="30"/></button>
@@ -56,7 +56,7 @@ const PostPage: React.FC = () => {
                 className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full" type="text"
                 placeholder="Напишите комментарий..."/>
               {commentMutation.isLoading
-                ? <div className="flex items-center"><Spinner/></div>
+                ? <Spinner className="flex items-center"/>
                 : <Button className="self-center" size="large" onClick={() => commentMutation.mutate()}>Ответить</Button>
               }
             </div>

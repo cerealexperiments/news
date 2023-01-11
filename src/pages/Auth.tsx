@@ -53,7 +53,9 @@ const Auth = () => {
                    className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
           </div>
         </div>
-        {authMutation.isLoading ? <div className="self-center"><Spinner/></div> : <Button className="self-center" size="thin" onClick={handleSubmit}>Войти</Button>}
+        {authMutation.isLoading
+          ? <Spinner className="self-center"/>
+          : <Button className="self-center" size="thin" onClick={handleSubmit}>Войти</Button>}
       </div>
     </div>
   );

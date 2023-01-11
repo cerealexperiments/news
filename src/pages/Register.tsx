@@ -70,7 +70,7 @@ const Register = () => {
           </div>
         </div>
         {registerMutation.isLoading
-          ? <div className="self-center"><Spinner/></div>
+          ? <Spinner className="self-center"/>
           : <Button className="self-center" size="thin" onClick={handleSubmit}>Регистрация</Button>}
         <p className="text-sm text-slate-600 text-center pt-4">Уже есть логин?
           <Link to="/auth" className="pl-1 font-medium text-violet-600 hover:underline"> Войти</Link>
