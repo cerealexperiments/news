@@ -4,6 +4,8 @@ import Auth from "./pages/Auth";
 import Root from "./pages/Root";
 import Register from "./pages/Register";
 import AuthContext from "./context/AuthContext";
+import {ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type ProtectedRouteProps = {
   isLoggedIn: boolean,
@@ -20,11 +22,14 @@ const ProtectedRoute = ({isLoggedIn, outlet}: ProtectedRouteProps) => {
 const App = () => {
   const {isLoggedIn} = useContext(AuthContext);
   return (
-    <Routes>
-      <Route path="/auth" element={<Auth/>}/>
-      <Route path="/register" element={<Register/>}/>
-      <Route path="*" element={<ProtectedRoute isLoggedIn={isLoggedIn} outlet={<Root/>}/>}/>
-    </Routes>
+    <>
+      <ToastContainer/>
+      <Routes>
+        <Route path="/auth" element={<Auth/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="*" element={<ProtectedRoute isLoggedIn={isLoggedIn} outlet={<Root/>}/>}/>
+      </Routes>
+    </>
   );
 };
 

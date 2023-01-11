@@ -2,15 +2,18 @@ import React, {useContext, useEffect, useState} from 'react';
 import logo from "../assets/logo.svg";
 import {useMutation} from "react-query";
 import AuthContext from "../context/AuthContext";
-import {Navigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {authenticateUser} from "../helpers/data";
 import Button from "../components/Button";
+import {notifySuccess, notifyError} from "../helpers/notifications";
+import Spinner from "../components/Spinner";
 
 const Auth = () => {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
 
   const {login} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const authMutation = useMutation({
     mutationFn: () => authenticateUser(nickname, password)
@@ -20,8 +23,12 @@ const Auth = () => {
     if (authMutation.isSuccess) {
       localStorage.setItem("token", authMutation.data.token);
       login();
+      notifySuccess("Logged in successfully");
+      navigate("/");
+    } else if(authMutation.isError) {
+      notifyError("Could not log in");
     }
-  }, [authMutation.isSuccess])
+  }, [authMutation.status])
 
   const handleSubmit = () => {
     authMutation.mutate();
@@ -46,15 +53,7 @@ const Auth = () => {
                    className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
           </div>
         </div>
-        <Button className="self-center" size="thin" onClick={handleSubmit}>Войти</Button>
-        <>
-          {authMutation.isError && <p>Error occurred!</p>}
-          {authMutation.isSuccess && <p>User logged in successfully!</p>}
-          {authMutation.isSuccess && <p>{authMutation.data.token}</p>}
-          {authMutation.isSuccess && <Navigate to="/"/>
-          }
-          {authMutation.isLoading && <p>Authenticating user...</p>}
-        </>
+        {authMutation.isLoading ? <div className="self-center"><Spinner/></div> : <Button className="self-center" size="thin" onClick={handleSubmit}>Войти</Button>}
       </div>
     </div>
   );

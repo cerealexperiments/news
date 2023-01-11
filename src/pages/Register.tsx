@@ -1,9 +1,12 @@
-import React, {useState} from 'react';
-import {Link} from "react-router-dom";
+import React, {useState, useEffect} from 'react';
+import {Link, useNavigate} from "react-router-dom";
 import logo from "../assets/logo.svg";
 import {useMutation} from "react-query";
 import {registerUser} from "../helpers/data";
 import Button from "../components/Button";
+import {notifySuccess, notifyError} from "../helpers/notifications";
+import Spinner from "../components/Spinner";
+
 
 const Register = () => {
 
@@ -13,9 +16,20 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const registerMutation = useMutation({
     mutationFn: () => registerUser(name, lastName, nickname, password, confirmPassword)
   });
+
+  useEffect(() => {
+    if(registerMutation.isSuccess) {
+      notifySuccess("User registered successfully");
+      navigate("/auth");
+    } else if(registerMutation.isError) {
+      notifyError("Could not register user");
+    }
+  }, [registerMutation.status])
 
   const handleSubmit = () => {
     registerMutation.mutate();
@@ -55,12 +69,9 @@ const Register = () => {
                    className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
           </div>
         </div>
-        <Button className="self-center" size="thin" onClick={handleSubmit}>Регистрация</Button>
-        <>
-          {registerMutation.isLoading && <p>Registering user...</p>}
-          {registerMutation.isError && <p>Error occured!</p>}
-          {registerMutation.isSuccess && <p>User registered successfully!</p>}
-        </>
+        {registerMutation.isLoading
+          ? <div className="self-center"><Spinner/></div>
+          : <Button className="self-center" size="thin" onClick={handleSubmit}>Регистрация</Button>}
         <p className="text-sm text-slate-600 text-center pt-4">Уже есть логин?
           <Link to="/auth" className="pl-1 font-medium text-violet-600 hover:underline"> Войти</Link>
         </p>

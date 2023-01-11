@@ -5,6 +5,7 @@ import {Link, useNavigate} from "react-router-dom";
 import React, {Fragment, useContext, useState} from "react";
 import headerImage from "../../assets/header.png"
 import AuthContext from "../../context/AuthContext";
+import {notifySuccess} from "../../helpers/notifications";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -20,6 +21,11 @@ const Header = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     navigate(`/?search=${searchValue}`)
+  }
+
+  const handleLogout = () => {
+    logout();
+    notifySuccess("Logged out successfully");
   }
 
   return (
@@ -78,7 +84,7 @@ const Header = () => {
                     <Menu.Item>
                       {({active}) => (
                         <button
-                          onClick={logout}
+                          onClick={handleLogout}
                           className={"w-full text-left " + classNames(
                             active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                             'block px-4 py-2 text-sm'

@@ -10,6 +10,7 @@ import {useUserPosts} from "../helpers/useUserPosts";
 import {useUserData} from "../helpers/useUserData";
 import {motion} from "framer-motion";
 import Button from "../components/Button";
+import {notifyError, notifySuccess} from "../helpers/notifications";
 
 const Profile = () => {
 
@@ -45,14 +46,22 @@ const Profile = () => {
   const postsQuery = useUserPosts()
 
   useEffect(() => {
-    setNickname(userData?.data?.nickname);
-    setName(userData?.data?.name);
-    setLastName(userData?.data?.["last_name"]);
-  }, [userData?.isSuccess])
+    console.log(userData.status);
+    if(userData.isSuccess) {
+      setNickname(userData?.data?.nickname);
+      setName(userData?.data?.name);
+      setLastName(userData?.data?.["last_name"]);
+    }
+  }, [userData?.status])
 
   useEffect(() => {
-    userData.refetch();
-  }, [profileMutation.isSuccess])
+    if(profileMutation.isSuccess) {
+      userData.refetch();
+      notifySuccess("Profile updated successfully");
+    } else if(profileMutation.isError) {
+      notifyError("Could not update profile");
+    }
+  }, [profileMutation.status])
 
   const handleSubmit = async () => {
     profileMutation.mutate();
@@ -107,7 +116,7 @@ const Profile = () => {
               </div>
             </div>
             {profileMutation.isLoading
-              ? <div className="self-start py-1.5 pr-16"><Spinner/></div>
+              ? <div className="self-end w-[128px] h-[40px] flex justify-center items-center"><Spinner/></div>
               : <Button className="self-end" size="large" onClick={handleSubmit}>Сохранить</Button>
             }
           </div>
