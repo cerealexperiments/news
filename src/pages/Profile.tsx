@@ -11,6 +11,7 @@ import {useUserData} from "../helpers/useUserData";
 import {motion} from "framer-motion";
 import Button from "../components/Button";
 import {notifyError, notifySuccess} from "../helpers/notifications";
+import FormField from "../components/FormField";
 
 const Profile = () => {
 
@@ -71,7 +72,7 @@ const Profile = () => {
     <div className="pt-12 max-w-screen-xl mx-auto w-full flex-1 flex flex-col">
       {userData.isLoading && <Spinner className="flex justify-center items-center flex-1 w-full pb-8"/>}
       {userData.isSuccess && <>
-        <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="flex items-center justify-start gap-32">
+        <motion.div initial={{opacity: 0}} animate={{opacity: 1}} transition={{duration: 0.15}} className="flex items-center justify-start max-w-screen-md justify-between">
           <div className="flex flex-col">
             <img className="bg-neutral-200 rounded-full w-72 h-72 object-cover"
                  src={userData.data["profile_image"] === null ? defaultImage : `https://megalab.pythonanywhere.com/${userData.data["profile_image"]}`}
@@ -94,26 +95,12 @@ const Profile = () => {
               </button>
             </div>
           </div>
-          <div className="flex flex-col justify-between">
+
+          <div className="flex flex-col justify-between max-w-[370px] w-full">
             <div className="flex flex-col gap-4 pb-8">
-              <div className="flex justify-between items-center">
-                <p>Фамилия</p>
-                <input onChange={(event) => setLastName(event.target.value)} value={lastName || ""}
-                       className="max-w-sm border border-slate-300 rounded-xl p-1.5"
-                       type="text"/>
-              </div>
-              <div className="flex justify-between space-x-4 items-center">
-                <p>Имя</p>
-                <input onChange={(event) => setName(event.target.value)} value={name || ""}
-                       className="max-w-sm border border-slate-300 rounded-xl p-1.5"
-                       type="text"/>
-              </div>
-              <div className="flex justify-between space-x-4 items-center">
-                <p>Никнейм</p>
-                <input onChange={(event) => setNickname(event.target.value)} value={nickname || ""}
-                       className="max-w-sm border border-slate-300 rounded-xl p-1.5"
-                       type="text"/>
-              </div>
+              <FormField label={"Фамилия"} value={lastName} onChange={(event) => setLastName(event.target.value)} type="text"/>
+              <FormField label={"Имя"} value={name} onChange={(event) => setName(event.target.value)} type="text"/>
+              <FormField label={"Никнейм"} value={nickname} onChange={(event) => setNickname(event.target.value)} type="text"/>
             </div>
             {profileMutation.isLoading
               ? <Spinner className="self-end w-[128px] h-[40px] flex justify-center items-center"/>

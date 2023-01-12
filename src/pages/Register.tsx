@@ -6,6 +6,7 @@ import {registerUser} from "../helpers/data";
 import Button from "../components/Button";
 import {notifySuccess, notifyError} from "../helpers/notifications";
 import Spinner from "../components/Spinner";
+import FormField from "../components/FormField";
 
 
 const Register = () => {
@@ -43,31 +44,11 @@ const Register = () => {
                style={{filter: "invert(44%) sepia(19%) saturate(1714%) hue-rotate(219deg) brightness(88%) contrast(92%)"}}/>
         </div>
         <div className="flex flex-col gap-6 pb-8">
-          <div className="flex justify-between items-center">
-            <p>Фамилия</p>
-            <input onChange={(event) => setLastName(event.target.value)}
-                   className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
-          </div>
-          <div className="flex justify-between items-center">
-            <p>Имя</p>
-            <input onChange={(event) => setName(event.target.value)}
-                   className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
-          </div>
-          <div className="flex justify-between items-center">
-            <p>Никнейм</p>
-            <input onChange={(event) => setNickname(event.target.value)}
-                   className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
-          </div>
-          <div className="flex justify-between items-center">
-            <p>Пароль</p>
-            <input onChange={(event) => setPassword(event.target.value)}
-                   className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
-          </div>
-          <div className="flex justify-between items-center">
-            <p>Потверждение пароля</p>
-            <input onChange={(event) => setConfirmPassword(event.target.value)}
-                   className="w-1/2 border border-slate-300 rounded-md p-1" type="text"/>
-          </div>
+          <FormField label="Фамилия" value={lastName} onChange={(event) => setLastName(event.target.value)} type="text"/>
+          <FormField label="Имя" value={name} onChange={(event) => setName(event.target.value)} type="text"/>
+          <FormField label="Никнейм" value={nickname} onChange={(event) => setNickname(event.target.value)} type="text"/>
+          <FormField label="Пароль" value={password} onChange={(event) => setPassword(event.target.value)} type="text"/>
+          <FormField label="Потверждение пароля" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="text"/>
         </div>
         {registerMutation.isLoading
           ? <Spinner className="self-center"/>

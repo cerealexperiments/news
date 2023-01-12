@@ -1,4 +1,4 @@
-import React, {useState, Fragment, ChangeEvent, useEffect} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Dialog, Transition} from "@headlessui/react";
 import {useMutation, useQuery} from "react-query";
 import {Tag} from "../types";
@@ -6,6 +6,7 @@ import {fetchTags, submitPost} from "../helpers/data";
 import {useUserPosts} from "../helpers/useUserPosts";
 import Spinner from "./Spinner";
 import Button from "./Button";
+import FormField from "./FormField";
 
 type NewPostModalProps = {
   isOpen: boolean,
@@ -28,15 +29,8 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
     mutationFn: () => submitPost(title, text, image, tag)
   })
 
-  const handleSubmit = () => {
+  const handlePost = () => {
     newPostMutation.mutate();
-  }
-
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (!event.target.files) {
-      return;
-    }
-    setImage(event.target.files[0])
   }
 
   const postsQuery = useUserPosts();
@@ -74,44 +68,25 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel
-                className="w-full max-w-xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <div className="mt-2 flex gap-8 items-center justify-start">
-                  <p className="w-1/2">
-                    Обложка новости
-                  </p>
-                  <div className="flex justify-start w-full">
-                    <input
-                      onChange={handleFileChange}
-                      className="file:py-1 file:px-4 file:border file:border-gray-300 file:text-sm file:rounded outline-none file:bg-white file:border-solid"
-                      type="file" accept="image"
-                      title="Загрузить"/>
-                  </div>
-                </div>
+                className="w-full max-w-xl space-y-6 transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <FormField label="Обложка новости" value={image} onChange={(event) => {
+                  const target = event.target as HTMLInputElement
+                  if (!target.files) {
+                    return;
+                  }
+                  setImage(target.files[0])
+                }} type="file"/>
+                <FormField inputSize="large" label="Заголовок" value={title || ""} onChange={(event) => setTitle(event.target.value)} type="text"/>
+                <FormField inputSize="large" label="Текст новости" value={text || ""} onChange={(event) => setText(event.target.value)} type="textarea"/>
 
-                <div className="mt-4 flex gap-8 items-center">
-                  <p className="w-1/2">
-                    Заголовок
-                  </p>
-                  <input onChange={(event) => setTitle(event.target.value)}
-                         className="w-full py-1 border border-gray-300 rounded" type="text"/>
-                </div>
-
-                <div className="mt-4 flex gap-8 items-start">
-                  <p className="w-1/2">
-                    Текст новости
-                  </p>
-                  <textarea onChange={(event) => setText(event.target.value)} rows={4}
-                            className="w-full py-1 border border-gray-300 rounded"/>
-                </div>
-
-                <div className="mt-4 flex gap-8 items-start">
-                  <p className="w-1/2">
+                <div className="flex justify-between items-start">
+                  <p>
                     Выбрать категорию
                   </p>
                   {tagsQuery.isLoading && <p>loading options...</p>}
                   {tagsQuery.isSuccess && <select onChange={(event) => setTag(event.target.value)
                   } defaultValue="Не выбрано"
-                                                  className="w-full bg-white rounded border border-gray-300 py-1 px-2"
+                                                  className="max-w-xs w-full bg-white rounded border border-gray-300 py-1 px-2"
                                                   name="категория">
                     {tagsQuery.data?.map((item: Tag) => {
                       return <option key={item.id} value={item.name}>
@@ -123,10 +98,11 @@ const NewPostModal: React.FC<NewPostModalProps> = ({isOpen, closeModal}) => {
                   }
                 </div>
 
-                <div className="mt-8 flex justify-center">
-                  <Button size="thin" onClick={handleSubmit}>Создать</Button>
-                </div>
-                {newPostMutation.isLoading && <div className="flex justify-center items-center flex-1 w-full pt-4"><Spinner/></div>}
+                <div className="flex justify-center">{newPostMutation.isLoading
+                  ? <Spinner className="mt-8 w-[128px] h-[32px] flex justify-center items-center flex-1 w-full"/>
+                  : <Button className="mt-8" size="thin" onClick={handlePost}>Создать</Button>
+                }</div>
+
               </Dialog.Panel>
             </Transition.Child>
           </div>
