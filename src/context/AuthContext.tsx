@@ -11,14 +11,12 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,
   token: "",
-  login: () => {
-  },
-  logout: () => {
-  },
+  login: () => {},
+  logout: () => {},
 });
 
 export const AuthProvider = ({children}: PropsWithChildren) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("token") ? true : false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
 
   const login = () => {

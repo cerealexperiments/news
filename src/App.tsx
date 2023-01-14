@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {Routes, Route, Navigate} from "react-router-dom";
+import React, {useContext} from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Auth from "./pages/Auth";
 import Root from "./pages/Root";
 import Register from "./pages/Register";
@@ -8,26 +8,26 @@ import {ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 type ProtectedRouteProps = {
-  isLoggedIn: boolean,
-  outlet: JSX.Element,
-}
+  isLoggedIn: boolean;
+  outlet: JSX.Element;
+};
 
-const ProtectedRoute = ({isLoggedIn, outlet}: ProtectedRouteProps) => {
+const ProtectedRoute = ({ isLoggedIn, outlet }: ProtectedRouteProps) => {
   if (!isLoggedIn) {
-    return <Navigate to="/auth" replace/>;
+    return <Navigate to="/auth" replace />;
   }
   return outlet;
-}
+};
 
 const App = () => {
-  const {isLoggedIn} = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <Routes>
-        <Route path="/auth" element={<Auth/>}/>
-        <Route path="/register" element={<Register/>}/>
-        <Route path="*" element={<ProtectedRoute isLoggedIn={isLoggedIn} outlet={<Root/>}/>}/>
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="*" element={<ProtectedRoute isLoggedIn={isLoggedIn} outlet={<Root />} />} />
       </Routes>
     </>
   );

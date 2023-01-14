@@ -2,33 +2,33 @@ export type User = {
   id: number;
   nickname?: string;
   name: string;
-  "last_name": string;
-  "profile_image"?: string;
-}
+  last_name: string;
+  profile_image?: string;
+};
 
 export type Post = {
   id: number;
   title: string;
   text: string;
   image: string;
-  "is_liked": boolean;
+  is_liked: boolean;
   comment?: Comment[];
-}
+};
 
 export type Tag = {
-  id: number,
-  name: string
-}
+  id: number;
+  name: string;
+};
 
 export type Comment = {
-  id: number,
+  id: number;
   user: User;
   text: string;
-  child?: CommentReply[]
-}
+  child?: CommentReply[];
+};
 
 export type CommentReply = {
-  id: number,
+  id: number;
   user: User;
   text: string;
-}
+};

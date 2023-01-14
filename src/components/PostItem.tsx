@@ -65,28 +65,23 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
   }, [likeMutation.status])
 
   return (
-    <motion.div key={id}
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                }}
-                transition={{
-                  duration: 0.15
-                }}
-                className="flex gap-6 [&:not(:first-child)]:pt-4">
-      <img className="max-w-[250px] flex-1 self-start aspect-[10/7] object-cover object-center brightness-75"
-           src={image !== "https://megalab.pythonanywhere.com/null" ? image : defaultImage} loading="lazy"
-           alt="post image"/>
+    <motion.div
+      key={id}
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      transition={{duration: 0.15}}
+      className="flex gap-6 [&:not(:first-child)]:pt-4">
+      <img
+        className="max-w-[250px] flex-1 self-start aspect-[10/7] object-cover object-center brightness-75"
+        src={image !== "https://megalab.pythonanywhere.com/null" ? image : defaultImage} loading="lazy"
+        alt="post image"/>
       <div className="relative flex flex-col flex-1 justify-center">
-        <p
-          className="font-medium text-lg pt-1 text-2xl">{title.length > 50 ? `${title.substring(0, 50)}...` : title}</p>
+        <p className="font-medium text-lg pt-1 text-2xl">{title.length > 50 ? `${title.substring(0, 50)}...` : title}</p>
         <p className="text-slate-500 pt-1 w-10/12">{text.length > 200 ? `${text.substring(0, 200)}...` : text}</p>
         <Link to={`/post/${id}`}>
           <p className="text-violet-600 hover:underline hover:text-violet-700 font-medium transition-colors pt-1 pb-4">Читать дальше...</p>
         </Link>
-        {<IoShareSocialOutline size="24px" color="#64748b"/>}
+        <IoShareSocialOutline size="24px" color="#64748b"/>
         {canDelete ? deleteMutation.isLoading ? <div className="absolute top-0 right-0"><Spinner/></div> : <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
           likeMutation.isLoading ? <div className="absolute top-0 right-0"><Spinner/></div> : <FiHeart onClick={handleClick} className={`${isLiked && "fill-red-600 text-red-600 hover:fill-white hover:text-black"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>
         }

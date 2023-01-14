@@ -1,5 +1,5 @@
-import React from 'react';
-import {Routes, Route} from "react-router-dom";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import Footer from "../components/Layout/Footer";
 import Index from "./Index";
@@ -12,15 +12,15 @@ const Root = () => {
   return (
     <>
       <div className="flex min-h-screen flex-col">
-        <Header/>
+        <Header />
         <Routes>
-          <Route index element={<Index/>}/>
-          <Route path="profile" element={<Profile/>}/>
-          <Route path="post/:postId" element={<PostPage/>}/>
-          <Route path="/favorites" element={<FavoritePosts/>}/>
-          <Route path="*" element={<NotFound/>}/>
+          <Route index element={<Index />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="post/:postId" element={<PostPage />} />
+          <Route path="/favorites" element={<FavoritePosts />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
-        <Footer/>
+        <Footer />
       </div>
     </>
   );

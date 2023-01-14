@@ -28,15 +28,6 @@ export const fetchPosts = async (search: string = "", tag: string = "",) => {
   return response.data;
 }
 
-export const fetchFavoritePosts = async () => {
-  const response = await axios.get("https://megalab.pythonanywhere.com/like/", {
-    headers: {
-      Authorization: `Token ${localStorage.getItem("token")}`
-    }
-  })
-  return response.data;
-}
-
 export const fetchTags = async () => {
   const response = await axios.get("https://megalab.pythonanywhere.com/tag/", {
     headers: {
@@ -118,7 +109,7 @@ export const replyToComment = async (postId: number, text: string, parentComment
 }
 
 
-export const editUserData = async (nickname: string, name: string, lastName: string, profileImage: null | File) => {
+export const editUserData = async (nickname: string, name: string, lastName: string, profileImage: null | string | File) => {
   const response = await axios.put("https://megalab.pythonanywhere.com/user/", {
     nickname: nickname,
     name: name,
