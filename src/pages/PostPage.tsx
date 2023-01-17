@@ -66,7 +66,7 @@ const PostPage: React.FC = () => {
             <input
               onChange={(event) => setCommentText(event.target.value)}
               value={commentText}
-              className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full"
+              className="border-gray-300 rounded-xl border-2 px-4 py-2 max-w-md w-full focus:outline-none"
               type="text"
               placeholder="Напишите комментарий..."
             />

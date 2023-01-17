@@ -10,7 +10,8 @@ type PostsListProps = {
 const PostsList: React.FC<PostsListProps> = ({posts, canDelete = false}) => {
   return (
     <div className="flex flex-col gap-4 divide-y pb-32 flex-1">
-      {posts.map((post: Post) =>
+      {posts.length > 0
+        ? posts.map((post: Post) =>
         <PostItem
           key={post.id}
           title={post.title}
@@ -19,6 +20,7 @@ const PostsList: React.FC<PostsListProps> = ({posts, canDelete = false}) => {
           is_liked={post.is_liked}
           id={post.id}
           canDelete={canDelete}/>)
+        : <p className="h-full flex justify-center items-center text-lg">Посты не найдены</p>
       }
     </div>
   );

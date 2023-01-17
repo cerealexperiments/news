@@ -86,7 +86,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           <input
             value={replyText}
             onChange={(event) => setReplyText(event.target.value)}
-            className="border-gray-300 rounded-xl border-2 px-4 py-1 max-w-md w-full"
+            className="border-gray-300 rounded-xl border-2 px-4 py-1 max-w-md w-full focus:outline-none"
             type="text"
             placeholder="Напишите комментарий..."
           />

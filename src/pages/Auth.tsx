@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import logo from "../assets/logo.svg";
 import {useMutation} from "react-query";
 import AuthContext from "../context/AuthContext";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {authenticateUser} from "../helpers/data";
 import Button from "../components/Button";
 import {notifySuccess, notifyError} from "../helpers/notifications";
@@ -49,6 +49,14 @@ const Auth = () => {
         {authMutation.isLoading
           ? <Spinner className="self-center"/>
           : <Button className="self-center" size="thin" onClick={handleSubmit}>Войти</Button>}
+        <p className="text-sm text-slate-600 text-center pt-4">
+          Нет аккаунта?
+          <Link
+            to="/register"
+            className="pl-1 font-medium text-violet-600 hover:underline">
+            Регистрация
+          </Link>
+        </p>
       </div>
     </div>
   );
