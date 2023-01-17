@@ -10,6 +10,7 @@ type FiltersProps = {
 
 const Filters: React.FC<FiltersProps> = ({ tags, setTag }) => {
   const [selected, setSelected] = useState("");
+  const [checkedId, setCheckedId] = useState(0);
 
   return (
     <motion.div
@@ -22,17 +23,21 @@ const Filters: React.FC<FiltersProps> = ({ tags, setTag }) => {
           return (
             <li key={tag.id} className="flex gap-4 hover:bg-slate-100 p-0.5">
               <input
+                style={{WebkitAppearance: "checkbox"}}
                 value={tag.name}
+                checked={checkedId === tag.id}
                 onChange={(event) => {
-                  setSelected(event.target.value);
-                  console.log(event.target.value);
+                  setCheckedId(() => {
+                    setSelected(event.target.value);
+                    return tag.id
+                  });
                 }}
-                type="radio"
+                type="checkbox"
                 name="tag"
-                className="w-4 cursor-pointer"
+                className="w-4 cursor-pointer accent-purple-600"
                 id={tag.name}
               />
-              <label htmlFor={tag.name}>{tag.name}</label>
+              <label className="cursor-pointer" htmlFor={tag.name}>{tag.name}</label>
             </li>
           );
         })}
@@ -41,7 +46,11 @@ const Filters: React.FC<FiltersProps> = ({ tags, setTag }) => {
         <Button className="flex-1" onClick={() => setTag(selected)}>
           Применить
         </Button>
-        <Button className="flex-1" onClick={() => setTag("")}>
+        <Button className="flex-1" onClick={() => {
+          setTag("");
+          setSelected("");
+          setCheckedId(0);
+        }}>
           Сбросить
         </Button>
       </div>
