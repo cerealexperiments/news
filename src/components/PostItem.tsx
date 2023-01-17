@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {IoShareSocialOutline} from "react-icons/io5";
+import {MdContentCopy} from "react-icons/md";
 import {FiTrash2, FiHeart} from "react-icons/fi";
 import {Post} from "../types";
 import {Link} from "react-router-dom";
+import {Menu, Transition} from "@headlessui/react";
 import defaultImage from "../assets/defaultImage.png";
 import {useMutation} from "react-query";
 import {likePost, removePost, unlikePost} from "../helpers/data";
@@ -10,6 +12,15 @@ import {useUserPosts} from "../helpers/useUserPosts";
 import {motion} from "framer-motion";
 import {useFavoritePosts} from "../helpers/useFavoritePosts";
 import Spinner from "./Spinner";
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}
+
+async function copyLinkToPost(postId: number) {
+  const url = `${window.location.host}/post/${postId}`;
+  await navigator.clipboard.writeText(url);
+}
 
 type PostItemProps = Post & {
   canDelete: boolean
@@ -81,7 +92,42 @@ const PostItem: React.FC<PostItemProps> = ({title, text, image, id, canDelete, i
         <Link to={`/post/${id}`}>
           <p className="text-violet-600 hover:underline hover:text-violet-700 font-medium transition-colors pt-1 pb-4">Читать дальше...</p>
         </Link>
-        <IoShareSocialOutline size="24px" color="#64748b"/>
+        <Menu as="div" className="relative max-w-fit">
+          <Menu.Button>
+            <IoShareSocialOutline size="24px" color="#64748b"/>
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-300"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95">
+              <Menu.Items className="absolute -right-24 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div className="py-1">
+                  <Menu.Item>
+                    {({ active }) => (
+                      <p
+                        onClick={() => copyLinkToPost(id)}
+                        className={
+                          "w-full flex items-center justify-between " +
+                          classNames(
+                            active
+                              ? "bg-gray-100 text-gray-900"
+                              : "text-gray-700",
+                            "block px-4 py-2 text-sm"
+                          )
+                        }>
+                        Скопировать ссылку
+                        <MdContentCopy size={20}/>
+                      </p>
+                    )}
+                  </Menu.Item>
+                </div>
+              </Menu.Items>
+            </Transition>
+          </Menu.Button>
+        </Menu>
         {canDelete ? deleteMutation.isLoading ? <div className="absolute top-0 right-0"><Spinner/></div> : <FiTrash2 onClick={handleClick} className="flex justify-center items-center absolute top-0 right-0 cursor-pointer hover:text-red-700 transition-colors" size="24px"/> :
           likeMutation.isLoading ? <div className="absolute top-0 right-0"><Spinner/></div> : <FiHeart onClick={handleClick} className={`${isLiked && "fill-red-600 text-red-600 hover:fill-white hover:text-black"}  absolute top-0 right-0 cursor-pointer hover:fill-red-600 hover:text-red-600 transition-colors`} size="24px"/>
         }
