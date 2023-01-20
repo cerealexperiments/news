@@ -24,10 +24,10 @@ const Register = () => {
 
   useEffect(() => {
     if (registerMutation.isSuccess) {
-      notifySuccess("User registered successfully");
+      notifySuccess("Регистрация выполнена успешно");
       navigate("/auth");
     } else if (registerMutation.isError) {
-      notifyError("Could not register user");
+      notifyError("Не удалось зарегистрироваться");
     }
   }, [registerMutation.status]);
 

@@ -24,7 +24,7 @@ const Header = () => {
 
   const handleLogout = () => {
     logout();
-    notifySuccess("Logged out successfully");
+    notifySuccess("Выполнен выход из аккаунта");
   };
 
   return (

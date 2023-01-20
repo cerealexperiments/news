@@ -24,10 +24,10 @@ const Auth = () => {
     if (authMutation.isSuccess) {
       localStorage.setItem("token", authMutation.data.token);
       login();
-      notifySuccess("Logged in successfully");
+      notifySuccess("Вход выполнен успешно");
       navigate("/");
     } else if(authMutation.isError) {
-      notifyError("Could not log in");
+      notifyError("Не удалось войти в аккаунт");
     }
   }, [authMutation.status])
 
