@@ -52,8 +52,8 @@ const Register = () => {
           <FormField label="Фамилия" value={lastName} onChange={(event) => setLastName(event.target.value)} type="text"/>
           <FormField label="Имя" value={name} onChange={(event) => setName(event.target.value)} type="text"/>
           <FormField label="Никнейм" value={nickname} onChange={(event) => setNickname(event.target.value)} type="text"/>
-          <FormField label="Пароль" value={password} onChange={(event) => setPassword(event.target.value)} type="text"/>
-          <FormField label="Потверждение пароля" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="text"/>
+          <FormField label="Пароль" value={password} onChange={(event) => setPassword(event.target.value)} type="password"/>
+          <FormField label="Потверждение пароля" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} type="password"/>
         </div>
         {registerMutation.isLoading
           ? <Spinner className="self-center" />

@@ -20,6 +20,7 @@ const Header = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     navigate(`/?search=${searchValue}`);
+    setSearchValue("");
   };
 
   const handleLogout = () => {

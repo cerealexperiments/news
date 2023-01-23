@@ -44,7 +44,7 @@ const Auth = () => {
         </div>
         <div className="flex flex-col gap-6 pb-8">
           <FormField label="Никнейм" value={nickname} onChange={(event) => setNickname(event.target.value)} type="text"/>
-          <FormField label="Пароль" value={password} onChange={(event) => setPassword(event.target.value)} type="text"/>
+          <FormField label="Пароль" value={password} onChange={(event) => setPassword(event.target.value)} type="password"/>
         </div>
         {authMutation.isLoading
           ? <Spinner className="self-center"/>
