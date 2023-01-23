@@ -1,5 +1,5 @@
 yesterday:
-  - implement fetching data from an api
+  - implement data fetching
   - start working on authentication
 today:
   - finish authentication

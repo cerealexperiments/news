@@ -1,4 +1,4 @@
 yesterday:
-  - refactor (problems: did not implement input validation due to now knowing yhe validation rules)
+  - refactor (problems: did not implement input validation due to now knowing the validation rules)
 today:
-  - share button
+  - add share button

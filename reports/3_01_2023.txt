@@ -1,5 +1,5 @@
 yesterday:
-  - implement comments
+  - implement commenting
 today:
   - improve styling
   - implement comment replies
